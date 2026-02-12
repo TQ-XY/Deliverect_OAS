@@ -24,9 +24,9 @@ jobs:
       - name: Deploy API documentation
         uses: bump-sh/github-action@v1
         with:
-          doc: <BUMP_DOC_ID>
-          token: ${{secrets.BUMP_TOKEN}}
-          file: doc/api-documentation.yml
+          doc: developer-hub
+          token: 3EPJfitfVhRynPUd2s6RcmBHjCCFR4gk
+          file: bump.yaml
 
   api-diff:
     if: ${{ github.event_name == 'pull_request' }}
@@ -38,9 +38,9 @@ jobs:
       - name: Comment pull request with API diff
         uses: bump-sh/github-action@v1
         with:
-          doc: <BUMP_DOC_ID>
-          token: ${{secrets.BUMP_TOKEN}}
-          file: doc/api-documentation.yml
+          doc: developer-hub
+          token: 3EPJfitfVhRynPUd2s6RcmBHjCCFR4gk
+          file: bump.yml
           command: diff
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
