@@ -1,0 +1,570 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Dispatch  API",
+    "description": " We team up with the best global third-party delivery apps, seamlessly consolidating all your channels into one simple system.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Machine2MachineAccessTokenRequest": {
+        "title": "Get Access Token",
+        "required": ["client_id", "client_secret", "audience", "grant_type"],
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          },
+          "audience": {
+            "type": "string"
+          },
+          "grant_type": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "client_id": "{{clientId}}",
+            "client_secret": "{{clientSecret}}",
+            "audience": "https://api.deliverect.com",
+            "grant_type": "client_credentials"
+          }
+        ]
+      },
+      "DeliveryJob": {
+        "title": "DeliveryJob Model",
+        "required": ["deliveryLocations.payment.orderIsAlreadyPaid"],
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "pickupTime": {
+            "type": "string"
+          },
+          "pickupLocation.location": {
+            "type": "string"
+          },
+          "pickupLocation.name": {
+            "type": "string"
+          },
+          "pickupLocation.street": {
+            "type": "string"
+          },
+          "pickupLocation.streetNumber": {
+            "type": "string"
+          },
+          "pickupLocation.postalCode": {
+            "type": "string"
+          },
+        "pickupLocation.city": {
+          "type": "string"
+        },
+          "pickupLocation.latitude": {
+            "type": "string"
+          },
+          "pickupLocation.longitude": {
+            "type": "string"
+          },
+          "deliveryLocations.orderId": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.orderIsAlreadyPaid": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.amount": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.paymentType": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "client_id": "{{clientId}}",
+            "client_secret": "{{clientSecret}}",
+            "audience": "https://api.deliverect.com",
+            "grant_type": "client_credentials"
+          }
+        ]
+      }
+
+
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": " "
+    },
+    {
+      "name": "Endpoints",
+      "description": "(Deliverect Endpoints)"
+    }
+  ],
+  "paths": {
+    "/oauth/token": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Machine 2 Machine Access Token",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "examples": [
+                  {
+                    "client_id": "{{clientId}}",
+                    "client_secret": "{{clientSecret}}",
+                    "audience": "https://api.deliverect.com",
+                    "grant_type": "token"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "access_token": "ey**-**-Q",
+                  "expires_at": 1620899002,
+                  "token_type": "Bearer",
+                  "scope": "genericPOS provisioning"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "error": "access_denied",
+                  "error_description": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/fulfillment/generic/events": {
+      "post": {
+        "tags": ["Endpoints"],
+        "summary": "Update delivery",
+        "description": "This webhook allows to persist updates from third party delivery systems to Deliverect. Currently updates to following delivery information are supported. See examples for technical details. - delivery status - pickup time & eta - delivery time & eta - courier information ##### Delivery job statuses: Following delivery job statuses exist in deliverect: | Status name | Integer value | |-|-| | `IN_DELIVERY` | 80 | | `EN_ROUTE_TO_PICKUP` | 83 | | `ARRIVED_AT_PICKUP` | 85 | | `EN_ROUTE_TO_DROPOFF` | 87 | | `ARRIVED_AT_DROPOFF` | 89 | | `DELIVERED` | 90 | ##### NOTE Please note, that here and later all dates and times, coming from/to Deliverect are UTC.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "examples": [
+                  {
+                    "deliveryJobId": "602***66a",
+                    "externalJobId": "DJ214233",
+                    "pickupTimeETA": "2021-05-13T13:59:00Z",
+                    "transportType": "bicycle",
+                    "courier": {
+                      "name": "Mac Miller",
+                      "phone": "+3292331234",
+                      "longitude": "51.05433703603857",
+                      "latitude": "3.738214852809371"
+                    },
+                    "locations": [
+                      {
+                        "orderId": "602987dd539d9697c836198b",
+                        "channelOrderDisplayId": "1234567890",
+                        "status": 40,
+                        "deliveryTimeETA": "2021-05-13T14:13:00Z"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": "OK"
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "OK"
+              }
+            }
+          },
+          "default": {
+            "description": "default",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": null
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fulfillment/cancel": {
+      "post": {
+        "tags": ["Endpoints"],
+        "summary": "Cancel Delivery",
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "string"
+              },
+              "example": {
+                "deliveryJobId": "6220a195af10fe8e6121257f",
+                "deliveryFeeCharged": 4500,
+                "reasonTag": "CUSTOMER_UNRESPONSIVE",
+                "extraDescription": "Customer did not pickup the phone nor showed up in door"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "/yourwebhook.com/validateJob": {
+      "post": {
+        "tags": ["Partner Webhooks"],
+        "summary": "Validate delivery job",
+        "description": "Gets called to validate if there are drivers available and to check if it's possible to deliver one or multiple orders.",
+        "requestBody": {
+          "content": {
+            "application/json":{
+              "example":{
+                "jobId": "627a6f4c2*****3fbc79a",
+    "account": "60f15a8***069643633",
+    "pickupTime": "2022-05-10T14:12:31.649000Z",
+    "transportType": "unknown",
+    "driverTip": 500,
+    "pickupLocation": {
+      "location": "60f15a8e9****ddceb6a7b1",
+      "name": "Location 1",
+      "remarks": "",
+      "street": "Van Slingelandtstraat",
+      "streetNumber": "32",
+      "postalCode": "1051CH",
+      "city": "Amsterdam",
+      "latitude": "52.3842918",
+      "longitude": "4.8662024"
+    },
+    "deliveryLocations": [
+      {
+        "orderId": "627a6f*****5c09221a9837",
+        "channelOrderDisplayId": "T191051",
+        "deliveryTime": "2022-05-10T14:27:31.649000Z",
+        "packageSize": "unknown",
+        "orderDescription": "This is a test order",
+        "company": "",
+        "name": "",
+        "street": "4 The Krook",
+        "postalCode": "8888KL",
+        "city": "Gent",
+        "phone": "",
+        "phoneAccessCode" : "43121212",
+        "latitude": "29.37045479999999",
+        "longitude": "47.9787778",
+        "deliveryRemarks": "",
+        "payment": {
+          "orderIsAlreadyPaid": true,
+          "amount": 800,
+         "paymentType": 0
+            }
+        }
+    ],
+    "ageCheck": false
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "jobId": "609***72e",
+                  "canDeliver": true,
+                  "pickupTimeETA": "2021-05-13T13:42:00Z",
+                  "deliveryLocations": [
+                    {
+                      "deliveryId": "ABC567",
+                      "orderId": "5f47a223280a29046404e2af",
+                      "deliveryTimeETA": "2021-05-13T13:59:00Z"
+                    }
+                  ],
+                  "price": {
+                    "price": 750,
+                    "taxRate": 10000
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "406",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "jobId": "",
+                  "canDeliver": false,
+                  "errors": [
+                    {
+                      "deliveryId": "",
+                      "orderId": "",
+                      "channelOrderDisplayId": "",
+                      "reason": 10,
+                      "description": "package size too large for delivery type"
+                    },
+                    {
+                      "deliveryId": "",
+                      "orderId": "",
+                      "channelOrderDisplayId": "",
+                      "reason": 20,
+                      "description": "No drivers available at this time"
+                    },
+                    {
+                      "deliveryId": "",
+                      "orderId": "",
+                      "channelOrderDisplayId": "",
+                      "reason": 30,
+                      "description": "address outside of delivery area"
+                    },
+                    {
+                      "deliveryId": "",
+                      "orderId": "",
+                      "channelOrderDisplayId": "",
+                      "reason": 40,
+                      "description": "too many packages for selected transport type"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/yourwebhook.com/createJob": {
+      "post": {
+        "tags": ["Partner Webhooks"],
+        "summary": "Create delivery job",
+        "description": "Creates a delivery job for one or more orders",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "examples": [
+                  {
+                    "jobId": "609***72e",
+                    "account": "5f1***131",
+                    "pickupTime": "2021-05-13T13:40:04Z",
+                    "transportType": "unknown",
+                    "pickupLocation": {
+                      "location": "606***555",
+                      "name": "Deliverect's Pizza Place",
+                      "remarks": "please use the backdoor for order pickup",
+                      "street": "van Ghentlaan",
+                      "streetNumber": "3",
+                      "postalCode": "9000 LK",
+                      "city": "Leusden",
+                      "latitude": "52.379189",
+                      "longitude": "4.899431"
+                    },
+                    "deliveryLocations": [
+                      {
+                        "orderId": "609***4dd",
+                        "channelOrderDisplayId": "MT4YVTPL",
+                        "deliveryTime": "2021-05-13T13:55:00Z",
+                        "packageSize": "unknown",
+                        "orderDescription": "hot food",
+                        "company": "BrainQuantums",
+                        "name": "V. Bertels",
+                        "street": "Refugehof",
+                        "streetNumber": "49",
+                        "postalCode": "9001 AB",
+                        "city": "Leusden",
+                        "phone": "+32123456789",
+                        "deliveryRemarks": "Don't ring door bell.",
+                        "latitude": "52.379189",
+                        "longitude": "4.899431",
+                        "payment": {
+                          "orderIsAlreadyPaid": true,
+                          "amount": 1100,
+                          "paymentType": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "jobId": "609***72e",
+                  "canDeliver": true,
+                  "pickupTimeETA": "2021-05-13T13:42:00Z",
+                  "externalJobId": "DJ123456",
+                  "distance": 4200,
+                  "duration": 31,
+                  "price": {
+                    "price": 750,
+                    "taxRate": 10000
+                  },
+                  "courier": {
+                    "courierId": "D1234",
+                    "firstName": "Delivery",
+                    "lastName": "Rider",
+                    "phoneNumber": "0032494112233",
+                    "transportType": "bicycle"
+                  },
+                  "deliveryLocations": [
+                    {
+                      "deliveryId": "ABC567",
+                      "orderId": "5f4***e2af",
+                      "channelOrderDisplayId": "MT4YVTPL",
+                      "deliveryTimeETA": "2021-05-13T13:57:00Z",
+                      "deliveryRemarks": "",
+                      "packageSize": "small"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/yourwebhook.com/cancelJob": {
+      "post": {
+        "tags": ["Partner Webhooks"],
+        "summary": "Cancel delivery job",
+        "description": "Cancel a delivery job after it was created at the partner. This can happen if all the orders on the job cannot be fulfilled or if the customer no longer wants the delivery.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "examples": [
+                  {
+                    "jobId": "5c8fbfd3c6489f00010e50d1",
+                    "account": "5be9fe94c6489f0001b2fe57",
+                    "pickupLocation": {
+                      "location": "5ea823bc8b4c780001a674a9"
+                    },
+                    "deliveryLocations": [
+                      {
+                        "orderId": "5f47a223280a29046404e2af",
+                        "channelOrderDisplayId": "MT4YVTPL",
+                        "deliveryId": "ABC567"
+                      }
+                    ],
+                    "courier": {
+                      "courierId": "D1234"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "status": "confirmed",
+                  "reason": "",
+                  "price": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}
