@@ -6720,7 +6720,9 @@
         },
         "/commerce/{accountId}/v2/checkouts": {
             "post": {
-                "tags": ["Endpoints"],
+                "tags": [
+                    "Endpoints"
+                ],
                 "summary": "Checkout Basket",
                 "description": "Creates a checkout session from a basket, leading to a payment intent based on the provided gateway.",
                 "operationId": "post_commerce{accountId}checkouts-1",
