@@ -21,15 +21,15 @@
       "description": " "
     },
     {
-      "name": "Endpoints",
-      "description": "(Deliverect Endpoints)"
+      "name": "Deliverect Deliverect Endpoints",
+      "description": "(Deliverect Deliverect Endpoints)"
     }
   ],
   "webhooks": {
     "/yourwebhook.com/register": {
       "post": {
-        "summary": "Channel Registration flow",
-        "tags": ["Partner Webhook"],
+        "summary": "Channel Registration",
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -81,8 +81,8 @@
     },
     "/yourwebhook.com/menu_update": {
       "post": {
-        "summary": "Customers will publish their menu to a provided webhook URL",
-        "tags": ["Partner Webhook"],
+        "summary": "Menu Update",
+        "tags": ["Partner Webhooks"],
         "parameters": [
           {
             "name": "accountId",
@@ -2763,7 +2763,7 @@
     "/yourwebhook.com/snooze": {
       "post": {
         "summary": "Snooze / Unsnooze Products",
-        "tags": ["Partner Webhook"],
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2873,8 +2873,8 @@
     },
     "/yourwebhook.com/busy_mode": {
       "post": {
-        "summary": "Store Closed temporary",
-        "tags": ["Partner Webhook"],
+        "summary": "Busy Mode",
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2939,8 +2939,8 @@
     },
     "/yourwebhook.com/prep_time": {
       "post": {
-        "summary": "Preparation time update from POS",
-        "tags": ["Partner Webhook"],
+        "summary": "Preparation time update",
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2979,8 +2979,8 @@
     },
     "/yourwebhook.com/order_status": {
       "post": {
-        "summary": "Order Status Update sent by the POS",
-        "tags": ["Partner Webhook"],
+        "summary": "Order Status Update",
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3046,8 +3046,8 @@
     },
     "/yourwebhook.com/courier_update": {
       "post": {
-        "summary": "Courier Status Update sent by the Dispatch partner",
-        "tags": ["Partner Webhook"],
+        "summary": "Courier Status Update",
+        "tags": ["Partner Webhooks"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3221,7 +3221,7 @@
     },
     "/{channelName}/order/{channelLinkId}": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Create Order",
         "description": "Your generic channel integration can use this endpoint to place a new order for a linked location. Note that, when sending a new order, Deliverect will check whether the party sending the order has the correct **scope** to do so. If not, they are considered unauthorized. The scope for generic channels is communicated to integrating parties together with the API Keys, and is checked in the request target URL only.",
         "requestBody": {
@@ -3336,7 +3336,7 @@
     },
     "/{channelName}/order/{channelLinkId}/": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Cancel Order",
         "description": "Your channel integration can process a cancellation using the same endpoint used create a new order.",
         "requestBody": {
@@ -3396,7 +3396,7 @@
     },
     "/{channelName}/menuStatus/{_id}": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Menu Update (Async)",
         "requestBody": {
           "content": {
@@ -3434,7 +3434,7 @@
     },
     "/{channelName}/updateStoreStatus/{channelLinkId}": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Update Store Status (open/closed)",
         "requestBody": {
           "content": {
@@ -3485,7 +3485,7 @@
     },
     "/{channelName}/courierUpdate/{channelLinkId}": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Update Courier Status",
         "requestBody": {
           "content": {
@@ -3544,7 +3544,7 @@
     },
     "/fulfillment/validate": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Dispatch Availability",
         "requestBody": {
           "content": {
@@ -3580,7 +3580,7 @@
     },
     "/tables/{locationId}": {
       "get": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "GET POS tables",
         "description": "Retrieves all tables and floors registered in a POS at a specific location.",
         "parameters": [
@@ -3615,7 +3615,7 @@
     },
     "/allAllegens": {
       "get": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Allergens and tags",
         "description": "This allows a channel to get allergens and tags existing in Deliverect.",
         "responses": {
@@ -3656,7 +3656,7 @@
     },
     "/updateStoreStatus": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Update Store Status (open/closed)",
         "description": "This allows a channel to inform Deliverect of any change to a store's status.",
         "responses": {
@@ -3714,7 +3714,7 @@
     },
     "/{channelName}/updateRating": {
       "post": {
-        "tags": ["Endpoints"],
+        "tags": ["Deliverect Endpoints"],
         "summary": "Order Rating Update",
         "description": "Your generic channel integration can use this endpoint to update rating for previously placed order. Note that, when sending rating update, Deliverect will check whether the party sending the order has the correct scope to do so. If not, they are considered unauthorized. The scope for generic channels is communicated to integrating parties, and is checked in the request target URL only. Therefore, make sure this URL correctly contains the scope. As a payload we always expect a JSON that contains: * Channel order id (`channelOrderId`) * Date(UTC) when order was placed in ISO 8601 format (`orderDate`) * Id of the channel link (`channelLinkId`) * Array of rating objects (`rating`) * Subject of the rating. See allowed values in Rating Subjects table (`subject`) * Rating value from 0 to 10 (`rating`) * [Optional] Comment for the rating (`comment`) * [Optional] Reason for negative rating. See allowed values in Rating Reasons table (`reason`) #### Rating Subjects | Subject | Integer value | | - | - | | Restaurant | 1 | | Delivery | 2 | #### Rating reasons | Reason | Integer value | | - | - | | Item missing | 1 | | Order issue | 2 | | Order is wrong | 3 | | Food isn't fresh | 4 | | Food is cold | 5 | | Box was opened | 6 | | Delivery late | 7 | | Delivery issue | 8 | | Rude staff | 9 | | No issues | 10000 |",
         "requestBody": {

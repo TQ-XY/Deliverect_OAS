@@ -1,0 +1,2537 @@
+openapi: 3.2.0
+info:
+  title: POS API
+  description: Our team at Deliverect understands the importance of a smooth
+    integration process with POS Systems for Restaurants and POS Systems for
+    C-stores. That's why we build integrations with the top point-of-sale
+    providers globally, ensuring an effortless setup process for our customers.
+  version: 1.0.0
+servers:
+  - url: https://api.staging.deliverect.io
+security:
+  - bearerAuth: []
+tags:
+  - name: Authentication
+    description: " "
+  - name: Deliverect Endpoints
+    description: (Deliverect Endpoints)
+paths:
+  /oauth/token:
+    post:
+      tags:
+        - Authentication
+      summary: Machine 2 Machine Access Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              examples:
+                - client_id: "{{clientId}}"
+                  client_secret: "{{clientSecret}}"
+                  audience: https://api.satging.deliverect.com
+                  grant_type: token
+      parameters:
+        - name: accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: content-type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Accept:
+              schema:
+                type: string
+                examples:
+                  - application/json
+            Content-Type:
+              schema:
+                type: string
+                examples:
+                  - application/json
+        "401":
+          description: Unauthorized
+          headers:
+            Date:
+              schema:
+                type: string
+                examples:
+                  - Wed, 20 Feb 2019 13:11:39 GMT
+            Content-Type:
+              schema:
+                type: string
+                examples:
+                  - application/json
+            Content-Length:
+              schema:
+                type: integer
+                examples:
+                  - "60"
+            Connection:
+              schema:
+                type: string
+                examples:
+                  - keep-alive
+            X-Auth0-RequestId:
+              schema:
+                type: string
+                examples:
+                  - 1bb8a6bbea0c249b00dd
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                examples:
+                  - "30"
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                examples:
+                  - "29"
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                examples:
+                  - "1550668300"
+            WWW-Authenticate:
+              schema:
+                type: string
+                examples:
+                  - Basic realm={{Users}}
+            Cache-Control:
+              schema:
+                type: string
+                examples:
+                  - private, no-store, no-cache, must-revalidate, post-check=0,
+                    pre-check=0
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: access_denied
+                error_description: Unauthorized
+  /catalog/accounts/{accountId}/inventoryUploadUrl:
+    post:
+      summary: Inventory Update
+      description: To support changes to item availability, Deliverect can receive an
+        inventory file.
+      operationId: inventory-update
+      parameters:
+        - name: accountId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: X-Deliverect-Version
+          in: header
+          schema:
+            type: string
+            default: retail
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  description: Will be used to notify you when the inventory file has been
+                    processed.
+            examples:
+              Request Example:
+                value:
+                  callbackUrl: https://example.com/inventoryCallback
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: >-
+                    {
+                        "fileId": "4e*********************************c1",
+                        "signedUrl": "https://storage.googleapis.com/deliverect-retail-import-dev/66e05ea4ca347e0fef7e43c2/catalogue_66e05ea4ca347e0fef7e43c2_1726066804.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=deliverect-retail-import%40deliverect-dev.iam.gserviceaccount.com%2F20240911%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240911T150004Z&X-Goog-Expires=3600&X-Goog-SignedHeaders=content-type%3Bhost%3Bx-goog-meta-callback&X-Goog-Signature=6eba9b***5a",
+                        "headers": {
+                            "x-goog-meta-user": "61********************b4",
+                            "x-goog-meta-callback": "https://example.com/inventoryCallback",
+                            "content-type": "text/csv",
+                            "Host": "storage.googleapis.com"
+                    }
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+          - language: python
+            code: |-
+              import requests
+
+              url = "https://api.staging.deliverect.io/catalog/accounts/{accountId}/inventoryUploadUrl"
+
+              payload = {'callbackUrl': 'https://example.com/inventoryCallback'}  
+              headers = {'Authorization': 'Bearer {TOKEN}'}
+
+              response = requests.post(url, headers=headers, json=payload)
+
+              print(response.text)
+            name: Python
+        samples-languages:
+          - python
+  /catalog/accounts/{accountId}/itemsUploadUrl:
+    post:
+      summary: Item Upload
+      description: To support large product ranges common to the retail sector,
+        Deliverect can receive an Item file for upload
+      operationId: items
+      parameters:
+        - name: accountId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: X-Deliverect-Version
+          in: header
+          schema:
+            type: string
+            default: retail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  description: Will be used to notify you when the items file has been fully
+                    processed.
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: >-
+                    {
+                      "fileId": "4e*********************************c1",
+                      "signedUrl": "https://storage.googleapis.com/deliverect-retail-import-dev/66e05ea4ca347e0fef7e43c2/items_66e05ea4ca347e0fef7e43c2_1726066804.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=deliverect-retail-import%40deliverect-dev.iam.gserviceaccount.com%2F20240911%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240911T150004Z&X-Goog-Expires=3600&X-Goog-SignedHeaders=content-type%3Bhost%3Bx-goog-meta-callback&X-Goog-Signature=6eba9b***5a",
+                      "headers": {
+                        "content-type": "text/csv",
+                        "x-goog-meta-callback": "https://example.com/callback",
+                        "host": "storage.googleapis.com"
+                      }
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+          - language: python
+            code: |-
+              import requests
+
+              url = "https://api.staging.deliverect.io/catalog/accounts/{accountId}/itemsUploadUrl"
+
+              payload = {'callbackUrl': 'https://example.com/itemsCallback'}  
+              headers = {'Authorization': 'Bearer {TOKEN}'}
+
+              response = requests.post(url, headers=headers, json=payload)
+
+              print(response.text)
+            name: Python Example
+        samples-languages:
+          - python
+  /allChannels:
+    get:
+      tags:
+        - Endpoints
+      summary: Integrated channels
+      description: This will provide all currently channels that we are integrated
+        with. For each, the `name` and `channelId` will be given.
+      responses:
+        "200":
+          description: OK
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                examples:
+                  - "true"
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+                examples:
+                  - Authorization,Cache-Control,Content-Type,If-Match,Keep-Alive,User-Agent
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+                examples:
+                  - DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                examples:
+                  - "*"
+            Content-Length:
+              schema:
+                type: integer
+                examples:
+                  - "1840"
+            Content-Type:
+              schema:
+                type: string
+                examples:
+                  - application/json
+            Date:
+              schema:
+                type: string
+                examples:
+                  - Mon, 23 Nov 2020 16:11:00 GMT
+            Server:
+              schema:
+                type: string
+                examples:
+                  - Eve/1.1.1 Werkzeug/1.0.1 Python/3.8.0
+            X-Protected-By:
+              schema:
+                type: string
+                examples:
+                  - Sqreen
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - name: DELIVERECT
+                  channelId: 1
+                - name: DELIVEROO
+                  channelId: 2
+                - name: FOODORA
+                  channelId: 3
+                - name: ......
+                  channelId: 4
+  /allAllergens:
+    get:
+      tags:
+        - Endpoints
+      summary: Allergens and tags
+      description: This allows a channel to get allergens and tags existing in Deliverect.
+      parameters: []
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - name: Alcohol
+                  allergenId: 1
+                - name: Halal
+                  allergenId: 2
+                - name: Kosher
+                  allergenId: 3
+                - name: Vegan
+                  allergenId: 4
+                - name: Vegetarian
+                  allergenId: 5
+  /accounts/{accountId}/brands:
+    get:
+      tags:
+        - Endpoints
+      summary: Account Brands
+      description: This endpoint provides the existing brands of an account. Brands
+        represent the grouping of a particular offering from a customer,
+        typically a menu concept or otherwise unique aspect. These brands are
+        then individually present on ordering platforms. They could be a range
+        of ghost kitchens, for example
+      parameters:
+        - name: accountId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        default:
+          description: default
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+                - brands:
+                    - name: Brand 1
+                      brandId: 601bd819bfc52ecea142bf9f
+                    - name: Brand 2
+                      brandId: 602131b4639578ac0da4588d
+                    - name: Brand 3
+                      brandId: 602cecade10d4dc9fe0f7fdc
+  /orderStatus/{orderId}:
+    post:
+      tags:
+        - Endpoints
+      summary: Update order status
+      description: This endpoint allows a POS to update the status of an order at each
+        stage in its preparation. It also allows for the modification of the
+        pickupTime
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderStatus"
+            examples:
+              example-0:
+                summary: New Order
+                value:
+                  orderId: 5d****e3448c290010****53
+                  status: 10
+                  reason: new order
+                  timeStamp: 2023-02-09T13:00:38.006000Z
+                  receiptId: "1234"
+              example-1:
+                summary: Accepted + Pickup Time
+                value:
+                  orderId: 63e3bcdab8c45ee373bbf667
+                  status: 20
+                  receiptId: T3651A85-1
+                  pickupTime: 2023-02-09T13:00:38.006000Z
+              example-2:
+                summary: Order Cancelled
+                value:
+                  orderId: 5d****e3448c290010****53
+                  status: 110
+                  reason: cancellation
+                  timeStamp: 2023-07-14 07:44:15.000Z
+                  receiptId: "1234"
+              example-3:
+                summary: Order Failed
+                value:
+                  orderId: 5d****e3448c290010****53
+                  status: 120
+                  reason: Invalid PLU
+                  timeStamp: 2023-07-14 07:44:15.000Z
+                  receiptId: "1234"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Status updated
+                  value:
+                    result: OK
+                example-1:
+                  summary: Status updated + Pickup Time
+                  value:
+                    result: OK
+                    pickupTime: 2023-02-09T13:00:38.006000Z
+                    deliveryTime: 2023-02-09T13:15:38.006000Z
+        "400":
+          description: error
+  /accounts:
+    get:
+      tags:
+        - Endpoints
+      summary: Get linked accounts
+      description: Every restaurant has an account. When such an account is linked to
+        your integrator account, it will show up when doing this call.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: "200"
+                  value:
+                    _items:
+                      - _id: 5f1***131
+                        name: Generic account
+                        accountType: 1
+                        currency: 1
+                        posSystem: 10000
+                        _updated: 2021-05-18T08:02:16.000000Z
+                        _created: 2020-07-24T07:36:49.000000Z
+                        _deleted: false
+                        _etag: 004a4df4bcce3cae83fd530c4a502278633ffd42
+                        locations:
+                          - 5f1***133
+                          - 606***b86
+                          - 606***555
+                        accounts: []
+                        brands:
+                          - name: Generic account
+                            brandId: 606***6c5
+                        deliverectVersion: "2.0"
+                        featureFlags:
+                          menuLocationOverrides: false
+                          autoApply: false
+                          pullAvailabilities: false
+                          combinedProductsPage: false
+                          enableSelfOnboarding: false
+                          reportsV2: false
+                          enableDiscounts: false
+                          enableDelivery: false
+                        region: EU
+                        settings:
+                          taxExcl: false
+                        whitelabel: deliverect
+                        users:
+                          - 607***ca68
+                        reportingEndpoints:
+                          - endpoint: https://reporting-endpoint.com/reporting/newOrder
+                            statusTrigger:
+                              - 20
+                            endpointType: 10
+                        _links:
+                          self:
+                            title: accounts
+                            href: accounts/5f1***131
+                          related:
+                            users:
+                              - title: users
+                                href: users/607***a68
+                            locations:
+                              - title: Locations
+                                href: locations/5f1***133
+                              - title: Locations
+                                href: locations/606***b86
+                              - title: Locations
+                                href: locations/606***555
+                            accounts: []
+                    _links:
+                      parent:
+                        title: home
+                        href: /
+                      self:
+                        title: accounts
+                        href: accounts
+                    _meta:
+                      page: 1
+                      max_results: 25
+                      total: 1
+                example-1:
+                  summary: 200 - Get linked accounts
+                  value:
+                    _items:
+                      - _id: 5f1***131
+                        name: Generic account
+                        accountType: 1
+                        currency: 1
+                        posSystem: 10000
+                        _updated: 2021-05-18T08:02:16.000000Z
+                        _created: 2020-07-24T07:36:49.000000Z
+                        _deleted: false
+                        _etag: 004a4df4bcce3cae83fd530c4a502278633ffd42
+                        locations:
+                          - 5f1***133
+                          - 606***b86
+                          - 606***555
+                        accounts:
+                          - 5c7***fef
+                        brands:
+                          - name: Generic account
+                            brandId: 606***6c5
+                        deliverectVersion: "2.0"
+                        featureFlags:
+                          menuLocationOverrides: false
+                          autoApply: false
+                          pullAvailabilities: false
+                          combinedProductsPage: false
+                          enableSelfOnboarding: false
+                          reportsV2: false
+                          enableDiscounts: false
+                          enableDelivery: false
+                        region: EU
+                        settings:
+                          taxExcl: false
+                        whitelabel: deliverect
+                        users:
+                          - 607***ca68
+                        reportingEndpoints:
+                          - endpoint: https://reporting-endpoint.com/reporting/newOrder
+                            statusTrigger:
+                              - 20
+                            endpointType: 10
+                        _links:
+                          self:
+                            title: accounts
+                            href: accounts/5f1***131
+                          related:
+                            users:
+                              - title: users
+                                href: users/607***a68
+                            locations:
+                              - title: Locations
+                                href: locations/5f1***133
+                              - title: Locations
+                                href: locations/606***b86
+                              - title: Locations
+                                href: locations/606***555
+                            accounts: []
+                      - _id: 5c7***fef
+                        name: Deliverect Test POS Resto
+                        accountType: 2
+                        currency: 1
+                        posSystem: 10000
+                        region: EU
+                        _updated: 2021-02-26T10:27:21.000000Z
+                        _created: 2021-02-26T10:27:10.000000Z
+                        _deleted: false
+                        _etag: 0b64e08badb2dbb6497899b3a506d3931cc2477e
+                        locations:
+                          - 5c7***ff0
+                        users:
+                          - 5c7***ff3
+                        _links:
+                          self:
+                            title: accounts
+                            href: accounts/5c7***fef
+                    _links:
+                      parent:
+                        title: home
+                        href: /
+                      self:
+                        title: accounts
+                        href: accounts
+                    _meta:
+                      page: 1
+                      max_results: 25
+                      total: 2
+        "401":
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                _status: ERR
+                _error:
+                  code: 401
+                  message: Please provide proper credentials
+  /locations:
+    get:
+      tags:
+        - Endpoints
+      summary: Get locations of  the account
+      description: Deliverect creates a location for each physical restaurant
+        location. A customer can therefore have multiple locations. This
+        endpoint allows you to query all locations belonging to a specific
+        account.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: "200"
+                  value:
+                    _items:
+                      - _id: 5bf02f38c6489f002c******
+                        _created: 2018-11-17T15:09:44.000000Z
+                        _updated: 2019-02-14T11:16:20.000000Z
+                        _etag: ef043a0519e16ba48d7b4b2f5af928c9324760e0
+                        name: Test location 1
+                        status: INTEGRATOR
+                        channelLinks:
+                          - 5bf02f38c6489f002******1
+                          - 5bf02f38c6489f002******2
+                        account: 5be9c971c6489f0029******
+                        _deleted: false
+                        _links:
+                          self:
+                            title: Locations
+                            href: locations/5bf02f38c6489f002c******
+                      - _id: 5bf02f38c6489f002c******
+                        _created: 2018-11-17T15:09:44.000000Z
+                        _updated: 2019-01-16T17:30:40.000000Z
+                        _etag: c9a39040acd03086bcd9abfd00af7acb5c5e748f
+                        name: Test Location 2
+                        status: INTEGRATOR
+                        channelLinks:
+                          - 5bf02f38c6489f002******1
+                        account: 5be9c971c6489f0029******
+                        _deleted: false
+                        _links:
+                          self:
+                            title: Locations
+                            href: locations/5bf02f38c6489f002c******
+                    _links:
+                      parent:
+                        title: home
+                        href: /
+                      self:
+                        title: locations
+                        href: 'locations?where={"account": "5be9c971c6489f00297746d4"}'
+                    _meta:
+                      page: 1
+                      max_results: 25
+                      total: 4
+        "401":
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                _status: ERR
+                _error:
+                  code: 401
+                  message: Please provide proper credentials
+      parameters:
+        - name: where
+          in: query
+          schema:
+            type: string
+          example:
+            account: 618******************061
+  /channelLinks:
+    get:
+      tags:
+        - Endpoints
+      summary: Channel Links
+      parameters:
+        - name: where
+          in: query
+          schema:
+            type: string
+          example:
+            account: 618******************061}
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              example:
+                _items:
+                  - _id: 65********************07
+                    account: 65********************6f
+                    posSystemId: 10000
+                    posSettings:
+                      generic:
+                        logOps: true
+                        sendTip: true
+                        sendServiceCharge: true
+                        sendDeliveryFee: true
+                        sendDiscount: true
+                        hasDirectTableIntegration: true
+                        orderItemRemarks: intactItemRemarks
+                        alwaysSendAllSnoozedProducts: true
+                        ordersWebhookURL: ""
+                        locationId: ""
+                        registerUrl: ""
+                        syncProductsURL: ""
+                        bufferOrders: false
+                        averagePreparationTime: 15
+                        customHeaders: ""
+                        sendStreetNumber: false
+                        anonymizeCustomer: false
+                        discountPLU: ""
+                        sendRebate: false
+                        sendDeliveryFeeCondition: 0
+                        forcePayment: 0
+                        bagFeePLU: ""
+                        deliveryByChannelIsPickup: false
+                        ignoreUnknownOrderStatuses: false
+                        separateSameProducts: false
+                        sortModifiers: 0
+                        averageDeliveryTime: 15
+                        dontSendCancel: false
+                        orderNoteTemplate: ""
+                        readonly: false
+                        priceLevelSettingsDelivery: lvl_1
+                        priceLevelSettingsEatIn: lvl_2
+                        priceLevelSettingsTakeaway: lvl_3
+                    logPOS: true
+                    defaultPreparationTime: 15
+                    averageDeliveryTime: 15
+                    channelSettings:
+                      insertPosOrderAfterDmaAccept: false
+                      applyDefaultTableId: false
+                      sendRejectStatus: false
+                      allowUpdateMenuPrepTime: true
+                      defaultTableId: "123"
+                      snoozeBatchWindow: 0
+                      coreFlatten: false
+                      isSnoozeRestricted: false
+                      isMenuPushRestricted: false
+                      locationId: ""
+                    kdsSettings: {}
+                    channel: 1
+                    _created: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                    _updated: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                    _etag: db********************0f
+                    name: Test channel
+                    enabledDMA: false
+                    location: 65********************fd
+                    status: 2
+                    posLocationId: ""
+                    posSystem: Generic POS
+                    kdsSystem: 0
+                    sortModifiers: 0
+                    APIKey: ""
+                    application: ""
+                    mockChannel: false
+                    ignorePOSOrderStatuses: false
+                    reportingEndpoints: []
+                    tags: []
+                    externalMenuIds: []
+                    sendOrdersToKDS: false
+                    priceLevelSettings:
+                      delivery: lvl_1
+                      takeaway: lvl_1
+                      eatIn: lvl_0
+                    storeConfigurations: {}
+                    orderNoteTemplate: ""
+                    timezone: ""
+                    taxExcl: false
+                    discountMapping: []
+                    isLoyaltyEnabled: false
+                    fulfillmentEnabled: false
+                    rejectOnDispatchFailure: false
+                    brandId: 65********************6e
+                    useIntegratedOOFulfilmentFlow: false
+                    sendCourierUpdatesToChannel: false
+                    openingHours:
+                      - dayOfWeek: 1
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 2
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 3
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 4
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 5
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 6
+                        startTime: 00:00
+                        endTime: 23:59
+                      - dayOfWeek: 7
+                        startTime: 00:00
+                        endTime: 23:59
+                    isTestChannel: true
+                    ssuLinkedMenuIds: []
+                    validationInfo:
+                      lastResult:
+                        connectionOK: false
+                        connectionResponse: ""
+                        credentialsOK: false
+                        credentialsResponse: ""
+                        sampleCallOK: false
+                        sampleCallResponse: ""
+                      isUnHealthy: false
+                    _deleted: false
+                    anonymizeCustomer: false
+                    bufferOrders: false
+                    menuUrl: ""
+                    mockPOS: false
+                    _links:
+                      self:
+                        title: channelLink
+                        href: channelLinks/65********************07
+                      related:
+                        account:
+                          title: accounts
+                          href: accounts/65********************6f
+                        location:
+                          title: Locations
+                          href: locations/65********************fd
+                        brandId:
+                          title: accounts
+                          href: accounts/65********************6e
+webhooks:
+  /register:
+    post:
+      tags:
+        - Partner Webhooks
+      summary: Register POS
+      description: "Gets called when POS is being registered in Deliverect. For
+        instance when a new customer adds a location you will receive the
+        register event. After this event it should be possible to sync products
+        and insert orders into the POS. Webhook payload contains information
+        such as: * Deliverect account id (`accountId`) * Deliverect location id
+        (`locationId`) * External location id provided by the POS
+        (`externalLocationId`) We always expect a JSON result which contains the
+        endpoints to: * Sync products from the POS to Deliverect
+        (`syncProductsURL`) * Insert order from Deliverect to the POS
+        (`ordersWebhookURL`) * Sync tables from the POS to Deliverect
+        (`syncTablesURL`) * Sync floors from the POS to Deliverect
+        (`syncFloorsURL`) If an endpoint is empty or not included in this
+        response we will not use it."
+      requestBody:
+        content:
+          application/json:
+            examples:
+              register:
+                value:
+                  accountId: 606d8489fcd8eddf51b475a3
+                  locationId: 606d8489fcd8eddf13b100a6
+                  externalLocationId: 606b030b8d7beb2aa83e0564
+                  locationName: Space Bar
+      responses:
+        default:
+          description: default
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                examples:
+                  - application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                ordersWebhookURL: https://integrator.com/ordersWebhookURL
+                syncProductsURL: https://integrator.com/syncProductsURL
+                syncTablesURL: https://integrator.com/syncTablesURL
+                syncFloorsURL: https://integrator.com/syncFloorsURL
+                operationsWebhookURL: https://integrator.com/operationsURL
+                storeStatusWebhookURL: https://integrator.com/storeStatusURL
+  /order:
+    post:
+      tags:
+        - Partner Webhooks
+      summary: Register POS
+      description: When a customer orders from a Deliverect integrated channel, it
+        will immediately deliver a webhook to a specified webhook endpoint
+        provided by the POS
+      requestBody:
+        content:
+          application/json:
+            examples:
+              orderNotification:
+                value:
+                  _created: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                  _updated: YYYY-MM-DDT08:36:46.SSSSSSZ
+                  _id: 62********************7c
+                  account: 61********************a1
+                  channelOrderId: TEST******4206
+                  channelOrderDisplayId: T**4206
+                  posId: ""
+                  posReceiptId: ""
+                  posLocationId: ""
+                  location: 61********************b4
+                  channelLink: 61********************c3
+                  status: 1
+                  statusHistory:
+                    - timeStamp: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                      status: 4
+                      response: ""
+                      source: 2
+                    - timeStamp: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                      status: 1
+                      response: ""
+                      source: 5
+                  packaging:
+                    includeCutlery: false
+                  by: Deliverect
+                  orderType: 2
+                  channel: 1
+                  pos: 10000
+                  rating: []
+                  pickupTime: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                  deliveryTime: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                  deliveryIsAsap: true
+                  courier:
+                    firstName: ""
+                    lastName: ""
+                    phoneNumber: ""
+                    deliveryBy: restaurant
+                  courierUpdateHistory:
+                    - status: 72
+                      received: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                      courier: {}
+                      arrivalTime: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                      deliveryTime: YYYY-MM-DDTHH:mm:ss.SSSSSSZ
+                      source: 5
+                  customer:
+                    name: Jack
+                    companyName: Deliverect
+                    phoneNumber: "+31615887898"
+                    phoneAccessCode: "0020"
+                    email: test@test.com
+                    note: call me when you arrive
+                    tin: ""
+                  deliveryAddress:
+                    street: ""
+                    postalCode: ""
+                    area: ""
+                    city: ""
+                    country: ""
+                    extraAddressInfo: ""
+                    coordinates:
+                      coordinates:
+                        - 80.9
+                        - -90.3
+                  orderIsAlreadyPaid: true
+                  taxes: []
+                  payment:
+                    amount: 650
+                    type: 0
+                    due: 0
+                    rebate: 0
+                    commissionType: ""
+                  note: ""
+                  items:
+                    - plu: P-BRGR
+                      name: Burger Combo (Drink not Included)
+                      sortOrder: 0
+                      price: 500
+                      quantity: 1
+                      productType: 1
+                      isCombo: true
+                      subItems:
+                        - plu: DRK-01
+                          name: Diet Soda
+                          sortOrder: 0
+                          price: 100
+                          quantity: 1
+                          productType: 1
+                          subItems: []
+                        - plu: P-BURG-CHE
+                          name: Cheeseburger
+                          sortOrder: 0
+                          price: 0
+                          quantity: 1
+                          productType: 1
+                          inBundle: true
+                          subItems:
+                            - plu: P-GHRK
+                              name: Extra Gherkin
+                              sortOrder: 0
+                              price: 50
+                              quantity: 2
+                              productType: 1
+                              subItems: []
+                              productTags: []
+                          productTags: []
+                      productTags:
+                        - 14
+                  decimalDigits: 2
+                  numberOfCustomers: 1
+                  channelOrderRawId: 62********************73
+                  channelOrderHistoryRawIds: []
+                  serviceCharge: 0
+                  deliveryCost: 0
+                  bagFee: 0
+                  tip: 0
+                  driverTip: 0
+                  discountTotal: -50
+                  discounts:
+                    - type: order_flat_off
+                      provider: channel
+                      name: Discount
+                      channelDiscountCode: 50OFF
+                      referenceId: "1"
+                      value: 50
+                      amount: 50
+                  capacityUsages: []
+                  recent: true
+                  resolvedBy: ""
+                  brandId: 61********************60
+                  testOrder: true
+                  timezone: Europe/Amsterdam
+                  date: 20230414
+                  tags:
+                    - BRAND X
+      responses:
+        "200":
+          description: Ok
+        "400":
+          description: Error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Machine2MachineAccessTokenRequest:
+      title: Get Access Token
+      required:
+        - client_id
+        - client_secret
+        - audience
+        - grant_type
+      type: object
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        audience:
+          type: string
+        grant_type:
+          type: string
+      examples:
+        - client_id: "{{clientId}}"
+          client_secret: "{{clientSecret}}"
+          audience: https://api.deliverect.com
+          grant_type: client_credentials
+    insertUpdateProducts:
+      title: Insert / Update Products
+      required:
+        - accountId
+        - locationId
+        - products
+        - products.items
+        - products.plu
+        - products.price
+        - categories
+        - priceLevels
+      type: object
+      properties:
+        accountId:
+          type: string
+        locationId:
+          type: string
+        products:
+          type: string
+        product.itemss:
+          type: string
+        products.plu:
+          type: string
+        products.price:
+          type: string
+        categories:
+          type: string
+      examples:
+        - accountId: 623af4e91f617214084cfcf5
+          locationId: 63e9e673fb7eb0a781d60080
+          products:
+            - name: Add a side
+              description: ""
+              nameTranslations:
+                en: Choose a side
+                es: Elige tu acompañamiento
+                fr: Choisissez votre garniture
+                nl: Kies je bijgerecht
+              descriptionTranslations: {}
+              productType: 3
+              plu: MOD-02
+              posProductId: POS-ID-003
+              posProductCategoryId: ""
+              subProducts:
+                - SI-01
+                - SI-02
+                - SI-03
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Rare
+              description: ""
+              nameTranslations:
+                en: Rare
+                es: Poco hecho
+                fr: Saignant
+                nl: Rood
+              descriptionTranslations: {}
+              productType: 2
+              plu: COOK-01
+              posProductId: POS-ID-004
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Medium Rare
+              description: ""
+              nameTranslations:
+                en: Medium Rare
+                es: Al punto
+                fr: À point
+                nl: Half doorbakken
+              descriptionTranslations: {}
+              productType: 2
+              plu: COOK-02
+              posProductId: POS-ID-005
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Fries
+              description: ""
+              nameTranslations:
+                en: Fries
+                es: Patatas fritas
+                fr: Frites
+                nl: Frietjes
+              descriptionTranslations: {}
+              productType: 2
+              plu: SI-01
+              posProductId: POS-ID-006
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              defaultQuantity: 1
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Salad
+              description: ""
+              nameTranslations:
+                en: Salad
+                es: Ensalada
+                fr: Salade
+                nl: Salade
+              descriptionTranslations: {}
+              productType: 2
+              plu: SI-02
+              posProductId: POS-ID-007
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 200
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Mashed Potato
+              description: ""
+              nameTranslations:
+                en: Mashed Potato
+                es: Puré de patata
+                fr: Purée de pommes de terre
+                nl: Aardappelpuree
+              descriptionTranslations: {}
+              productType: 2
+              plu: SI-03
+              posProductId: POS-ID-008
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 100
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Chicken Sate
+              description: Product with Nested Modifiers - Multimax variables - Allergens
+                (tags)
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-SATE
+              posProductId: POS-ID-009
+              posProductCategoryId: ""
+              subProducts:
+                - MG-RICE
+                - MG-NOODLES
+              productTags:
+                - 104
+                - 108
+              posCategoryIds:
+                - CHK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/satay-62284e3c8c506f015be60184.jpeg
+              max: 0
+              min: 0
+              price: 450
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: White Rice
+              description: White coloured rice
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: RICE-01
+              posProductId: POS-ID-012
+              posProductCategoryId: ""
+              subProducts:
+                - MG-SAUCES
+              productTags: []
+              posCategoryIds:
+                - SD
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/nasiputi-1610290140494.jpg
+              max: 0
+              min: 0
+              price: 450
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Egg Noodles
+              description: Egg noodles and veggies fried and tossed with a delicious sauce
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: NOOD-01
+              posProductId: POS-ID-014
+              posProductCategoryId: ""
+              subProducts:
+                - MG-SAUCES
+              productTags: []
+              posCategoryIds:
+                - SD
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/bamigoreng-1610289922969.jpg
+              max: 0
+              min: 0
+              price: 450
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Ramen Noodles
+              description: Chinese-style wheat noodles
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: NOOD-02
+              posProductId: POS-ID-015
+              posProductCategoryId: ""
+              subProducts:
+                - MG-SAUCES
+              productTags: []
+              posCategoryIds:
+                - SD
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/Mihoen-2-1-1610289870157.jpg
+              max: 0
+              min: 0
+              price: 450
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Sate Sauce
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: SAUCE-01
+              posProductId: POS-ID-017
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 50
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Hot Sauce
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: SAUCE-02
+              posProductId: POS-ID-018
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 50
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Burger Combo (Drink not Included)
+              description: Combo with Bundles - Modifier Groups as Upsell
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-BRGR
+              posProductId: POS-ID-019
+              posProductCategoryId: ""
+              subProducts:
+                - BNDL-BRG
+                - MG-FRS
+                - UPSLL-01
+              productTags: []
+              posCategoryIds:
+                - STK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/burger-62286be78c506f015be60190.jpeg
+              isCombo: true
+              max: 0
+              min: 0
+              price: 950
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Fries Selection
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: MG-FRS
+              posProductId: POS-ID-021
+              posProductCategoryId: ""
+              subProducts:
+                - P-FRS-S
+                - P-FRS-M
+                - P-FRS-L
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Add a Drink? (not included)
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: UPSLL-01
+              posProductId: POS-ID-022
+              posProductCategoryId: ""
+              subProducts:
+                - DRNK-01
+                - DRNK-02
+                - DRNK-03
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              multiMax: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: French Fries
+              description: Plain fries from France
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-FRS-S
+              posProductId: POS-ID-023
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - FRS
+              max: 0
+              min: 0
+              price: 200
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Chicken Burger
+              description: Crispy coated chicken thigh, iceberg lettuce, pickles, slice of
+                cheese & mayo, all in a toasted brioche bun.
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-BURG-CHK
+              posProductId: POS-ID-026
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - STK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/chkburger-6228c1dcdb5986001ebf58df.jpeg
+              max: 0
+              min: 0
+              price: 800
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads: []
+              posValues:
+                overloads: null
+            - name: Ginger Beer
+              description: Australia's favourite ginger beer!
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: DRNK-03
+              posProductId: POS-ID-031
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - DRK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/gingerbeer-62285548db5986001ebf58d1.jpg
+              max: 0
+              min: 0
+              price: 400
+              bottleDepositPrice: 100
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Mini Poke Bowl
+              description: A little bowl of Poke
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: SZ-01
+              posProductId: POS-ID-034
+              posProductCategoryId: ""
+              subProducts:
+                - BNDL-01-SML
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 800
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Large Poke Bowl
+              description: A big bowl of Poke
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: SZ-02
+              posProductId: POS-ID-035
+              posProductCategoryId: ""
+              subProducts:
+                - BNDL-LG
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 1200
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Choose Your Base
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 4
+              plu: BNDL-01
+              posProductId: POS-ID-036
+              posProductCategoryId: ""
+              subProducts:
+                - BS-01
+                - BS-02
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 6000
+              takeawayTax: 6000
+            - name: Choose Your Protein
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 4
+              plu: BNDL-01-SML
+              posProductId: POS-ID-037
+              posProductCategoryId: ""
+              subProducts:
+                - PRT-01
+                - PRT-02
+                - PRT-03
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 6000
+              takeawayTax: 6000
+            - name: Choose Your Protein
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 4
+              plu: BNDL-LG
+              posProductId: POS-ID-038
+              posProductCategoryId: ""
+              subProducts:
+                - PRT-01
+                - PRT-02
+                - PRT-03
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Spicy Tuna
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PRT-02
+              posProductId: POS-ID-043
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Teriyaki Chicken
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PRT-03
+              posProductId: POS-ID-044
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Spicy Tofu
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: XTRA-TOF
+              posProductId: POS-ID-045
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Smashed Avocado
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: XTRA-AVO
+              posProductId: POS-ID-047
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Add extra toppings
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: PIZZ-TOP
+              posProductId: POS-ID-050
+              posProductCategoryId: ""
+              subProducts:
+                - PEPP
+                - BAC
+                - RONION
+                - MUSH
+                - REDPEPP
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              multiMax: 10
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Red Pepper
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: REDPEPP
+              posProductId: POS-ID-055
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: Chicken Tenders
+              description: Variant prices for different sizes will show cheapaest on top level
+                product
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: VAR-PROD-1
+              posProductId: POS-ID-057
+              posProductCategoryId: ""
+              subProducts:
+                - MG-VAR-1
+              productTags: []
+              posCategoryIds:
+                - CHK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/chicken-62285f90db5986001ebf58d5.jpg
+              isVariant: true
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: 3 Pieces
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: VAR-1
+              posProductId: POS-ID-059
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 800
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              imageUrl: ""
+              posValues:
+                eatInTax: 9000
+                imageUrl: null
+            - name: Delicious Steak Frites
+              description: Basic Example Product with - Modifier groups - min/max variables -
+                default selection - translations
+              nameTranslations:
+                en: Delicious Steak Frites
+                es: Deliciosos Bistecs Fritos
+                fr: Steak Frites Délicieux
+                nl: Heerlijke Biefstuk Frites
+              descriptionTranslations: {}
+              productType: 1
+              plu: STK-01
+              posProductId: POS-ID-001
+              posProductCategoryId: ""
+              subProducts:
+                - MOD-01
+                - MOD-02
+              productTags: []
+              posCategoryIds:
+                - STK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/steak-622862588c506f015be6018e.jpeg
+              max: 0
+              min: 0
+              price: 1500
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Cooking instructions
+              description: ""
+              nameTranslations:
+                en: Cooking Instructions
+                es: Cocinado
+                fr: Cuisson
+                nl: Kook instructies
+              descriptionTranslations: {}
+              productType: 3
+              plu: MOD-01
+              posProductId: POS-ID-002
+              posProductCategoryId: ""
+              subProducts:
+                - COOK-01
+                - COOK-02
+                - COOK-03
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Well Done
+              description: ""
+              nameTranslations:
+                en: Well done
+                es: Muy hecho
+                fr: Bien cuit
+                nl: Doorbakken
+              descriptionTranslations: {}
+              productType: 2
+              plu: COOK-03
+              posProductId: POS-ID-006
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Rice Selection
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: MG-RICE
+              posProductId: POS-ID-010
+              posProductCategoryId: ""
+              subProducts:
+                - RICE-01
+                - RICE-02
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              multiMax: 99
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Noodles Selection
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: MG-NOODLES
+              posProductId: POS-ID-011
+              posProductCategoryId: ""
+              subProducts:
+                - NOOD-01
+                - NOOD-02
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              multiMax: 99
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Yellow Rice
+              description: White rice with Saffron
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: RICE-02
+              posProductId: POS-ID-013
+              posProductCategoryId: ""
+              subProducts:
+                - MG-SAUCES
+              productTags: []
+              posCategoryIds:
+                - SD
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/Nasi-kuning-3-1610289726946.jpg
+              max: 0
+              min: 0
+              price: 450
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Choose a sauce
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: MG-SAUCES
+              posProductId: POS-ID-016
+              posProductCategoryId: ""
+              subProducts:
+                - SAUCE-01
+                - SAUCE-02
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              multiMax: 99
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Burger Selection
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 4
+              plu: BNDL-BRG
+              posProductId: POS-ID-020
+              posProductCategoryId: ""
+              subProducts:
+                - P-BURG-CHK
+                - P-BURG-CHE
+                - P-BURG-VEG
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Curly Fries
+              description: Spiralised potatoes, fried
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-FRS-M
+              posProductId: POS-ID-024
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - FRS
+              max: 0
+              min: 0
+              price: 200
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Seasoned Fries
+              description: Plain fries, but a bit fancier
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-FRS-L
+              posProductId: POS-ID-025
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - FRS
+              max: 0
+              min: 0
+              price: 250
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Cheeseburger
+              description: 100% beef patty, cheddar, caramelized onions, mayonnaise, pickles
+                in a Pretzel bun
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-BURG-CHE
+              posProductId: POS-ID-027
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - STK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/cheeseburger-62286e26db5986001ebf58d7.jpg
+              max: 0
+              min: 0
+              price: 850
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Veggie Burger
+              description: Black bean burgers with sweet potato, mushrooms, quinoa, and
+                pecans.
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-BURG-VEG
+              posProductId: POS-ID-028
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - STK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/veggieburger-62286cbac715b403b0eb7294.jpeg
+              max: 0
+              min: 0
+              price: 750
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Coca Cola
+              description: Cola flavoured sugar and caffeine
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: DRNK-01
+              posProductId: POS-ID-029
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - DRK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/cocacola-622854a78c506f015be6018a.jpeg
+              max: 0
+              min: 0
+              price: 400
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Diet Coke
+              description: Cola flavoured aspartame and caffeine
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: DRNK-02
+              posProductId: POS-ID-030
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - DRK
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/dietcoke-622854ce8c506f015be6018c.jpeg
+              max: 0
+              min: 0
+              price: 400
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Build a Poke Bowl
+              description: Select a size then choose your ingredients
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: P-PB-01
+              posProductId: POS-ID-032
+              posProductCategoryId: ""
+              subProducts:
+                - POKE-SZ
+                - BNDL-01
+                - BNDL-02
+              productTags: []
+              posCategoryIds:
+                - POKB
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/poke-622850c8b303fc03a148de44.jpg
+              isCombo: true
+              max: 0
+              min: 0
+              price: 1000
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Choose your size
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: POKE-SZ
+              posProductId: POS-ID-033
+              posProductCategoryId: ""
+              subProducts:
+                - SZ-01
+                - SZ-02
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Add Extras
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 4
+              plu: BNDL-02
+              posProductId: POS-ID-039
+              posProductCategoryId: ""
+              subProducts:
+                - XTRA-TOF
+                - XTRA-CONI
+                - XTRA-AVO
+              productTags: []
+              posCategoryIds: []
+              max: 3
+              min: 0
+              multiMax: 3
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Sushi Rice
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: BS-01
+              posProductId: POS-ID-040
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Cruncy Cabbage Slaw
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: BS-02
+              posProductId: POS-ID-041
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Yuzu Salmon
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PRT-01
+              posProductId: POS-ID-042
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - BNDL-01-SML
+                  bundlePrice: 180
+                - scopes:
+                    - BNDL-LG
+                  bundlePrice: 250
+            - name: Crispy Onions
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: XTRA-CONI
+              posProductId: POS-ID-046
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Build your own Pizza
+              description: Build your own pizza, first topping is free!
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PIZZ-00
+              posProductId: POS-ID-048
+              posProductCategoryId: ""
+              subProducts:
+                - FREE-TOP
+                - PIZZ-TOP
+              productTags: []
+              posCategoryIds:
+                - PZ
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/pizza-6228525eb303fc03a148de46.jpeg
+              max: 0
+              min: 0
+              price: 800
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Choose your First Topping
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: FREE-TOP
+              posProductId: POS-ID-049
+              posProductCategoryId: ""
+              subProducts:
+                - PEPP
+                - BAC
+                - RONION
+                - MUSH
+                - REDPEPP
+              productTags: []
+              posCategoryIds: []
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: Pepperoni
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: PEPP
+              posProductId: POS-ID-051
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: Red Onion
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: RONION
+              posProductId: POS-ID-052
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: Mushroom
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: MUSH
+              posProductId: POS-ID-053
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: Bacon
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: BAC
+              posProductId: POS-ID-054
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: Pineapple
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 2
+              plu: Pine
+              posProductId: POS-ID-056
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+              overloads:
+                - scopes:
+                    - FREE-TOP
+                  price: 0
+                - scopes:
+                    - PIZZ-TOP
+                  price: 100
+            - name: How many pieces?
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 3
+              plu: MG-VAR-1
+              posProductId: POS-ID-058
+              posProductCategoryId: ""
+              subProducts:
+                - VAR-1
+                - VAR-2
+                - VAR-3
+              productTags: []
+              posCategoryIds: []
+              isVariantGroup: true
+              max: 1
+              min: 1
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: 6 Pieces
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: VAR-2
+              posProductId: POS-ID-060
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 1100
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: 9 Pieces
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: VAR-3
+              posProductId: POS-ID-061
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 1350
+              priceLevels: {}
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: The Hawaiian
+              description: Italy's favourite Pizza!
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PIZZ-01
+              posProductId: POS-ID-062
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds:
+                - PZ
+              imageUrl: https://storage.googleapis.com/ikona-bucket-staging/images/5ff6ee089328c8aefeeabe33/hawaiian-622855c7b303fc03a148de48.jpeg
+              max: 0
+              min: 0
+              price: 800
+              priceLevels:
+                UE: 900
+                DL: 850
+                TA: 825
+              deliveryTax: 9000
+              takeawayTax: 9000
+              eatInTax: 9000
+            - name: bottle deposit
+              description: ""
+              nameTranslations: {}
+              descriptionTranslations: {}
+              productType: 1
+              plu: PR06
+              posProductId: POS-ID-063
+              posProductCategoryId: ""
+              subProducts: []
+              productTags: []
+              posCategoryIds: []
+              max: 0
+              min: 0
+              price: 0
+              priceLevels: {}
+              deliveryTax: 0
+              takeawayTax: 0
+          categories:
+            - name: Steak & Burgers
+              posCategoryId: STK
+            - name: Sides
+              posCategoryId: SD
+            - name: Drinks
+              posCategoryId: DRK
+            - name: Poke Bowls
+              posCategoryId: POKB
+            - name: Pizzas
+              posCategoryId: PZ
+            - name: Chicken
+              posCategoryId: CHK
+    orderStatus:
+      title: Order Status
+      required:
+        - orderId
+        - status
+        - reason
+        - receiptId
+      type: object
+      properties:
+        orderId:
+          type: string
+        status:
+          type: string
+        reason:
+          type: string
+        timeStamp:
+          type: string
+        receiptId:
+          type: string
+      examples:
+        - orderId: 63e3bcdab8c45ee373bbf667
+          status: 20
+          receiptId: T3651A85-1
+          pickupTime: 2023-02-09T13:00:38.006000Z
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
