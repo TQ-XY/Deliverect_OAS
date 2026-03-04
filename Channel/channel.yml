@@ -11,7 +11,7 @@ tags:
   - name: Authentication
     description: " "
   - name: Endpoints
-    description: (Deliverect Endpoints)
+    description: Deliverect Endpoints
 paths:
   /oauth/token:
     post:
