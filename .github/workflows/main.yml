@@ -16,4 +16,4 @@ jobs:
         with:
           doc: 883926e0-674c-42e8-b9f6-8b1466744762
           token: ${{secrets.BUMP_TOKEN}}
-          file: channel.yml
+          file: Channel/channel.yml
