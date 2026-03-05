@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Channel API",
-    "description": " Simplify online ordering for your restaurant or grocery store with Deliverect. Our platform seamlessly integrates multiple online ordering systems, consolidating orders from all channels into one easy-to-manage dashboard.",
+    "description": "Channels are online stores that allow customers to place orders. They are connected to Deliverect and allow for the transmission of orders.",
     "version": "1.0.0"
   },
   "servers": [
