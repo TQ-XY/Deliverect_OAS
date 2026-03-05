@@ -29,7 +29,7 @@ jobs:
         with:
           doc: 883926e0-674c-42e8-b9f6-8b1466744762
           token: ${{secrets.BUMP_TOKEN}}
-          file: 8036dc9e-c2ff-4d92-816e-3fa4535ac1f8
+          file: Commerce/commere.json
 
   pos-api:
     name: Deploy API doc on Bump
@@ -42,7 +42,7 @@ jobs:
         with:
           doc: 883926e0-674c-42e8-b9f6-8b1466744762
           token: ${{secrets.BUMP_TOKEN}}
-          file: 402c4109-dbee-4857-9ee1-9917a71a676e
+          file: Restaurant POS/pos.json
 
   retail-api:
     name: Deploy API doc on Bump
@@ -55,7 +55,7 @@ jobs:
         with:
           doc: 883926e0-674c-42e8-b9f6-8b1466744762
           token: ${{secrets.BUMP_TOKEN}}
-          file: 511b3514-731a-4094-bfc0-0537b953a253
+          file: Retail POS/retail.json
 
  
  
