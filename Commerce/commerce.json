@@ -22,7 +22,7 @@
         },
         {
             "name": "Endpoints",
-            "description": "(Deliverect Endpoints)"
+            "description": "Deliverect Endpoints"
         }
     ],
     "paths": {
