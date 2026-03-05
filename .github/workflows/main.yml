@@ -29,7 +29,7 @@ jobs:
         with:
           doc: 8036dc9e-c2ff-4d92-816e-3fa4535ac1f8
           token: ${{secrets.BUMP_TOKEN}}
-          file: Commerce/commere.json
+          file: Commerce/commerce.json
 
   pos-api:
     name: Deploy API doc on Bump
