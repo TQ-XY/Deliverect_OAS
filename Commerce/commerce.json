@@ -18,11 +18,11 @@
     "tags": [
         {
             "name": "Authentication",
-            "description": " "
+            "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
         },
         {
             "name": "Endpoints",
-            "description": "(Deliverect Endpoints)"
+            "description": "Deliverect Endpoints"
         }
     ],
     "paths": {
