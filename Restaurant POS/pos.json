@@ -2,19 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "POS API",
-    "description": "Our team at Deliverect understands the importance of a smooth integration process with POS Systems for Restaurants and POS Systems for C-stores. That's why we build integrations with the top point-of-sale providers globally, ensuring an effortless setup process for our customers.",
+    "description": "Our team at Deliverect understands the importance of a smooth integration process with POS Systems for Restaurants and POS Systems for C-stores. That's why we build integrations with the top point-of-sale providers globally, ensuring an effortless setup process for our customers. Please use [this guide](https://resources.developers.deliverect.com/en/articles/13628895-pos-integration-overview) to build your POS integration.",
     "version": "1.0.0"
   },
   "servers": [
     {
       "url": "https://api.staging.deliverect.com"
     }
-  ],
-  "x-topics": [
-    {
-            "title": "Build a POS integration",
-            "content": "To build the POS integration, please use follow these steps [**here**](https://resources.developers.deliverect.com/en/articles/13628895-pos-integration-overview)"
-        }
   ],
   "security": [
     {
