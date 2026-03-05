@@ -10,6 +10,12 @@
       "url": "https://api.staging.deliverect.com"
     }
   ],
+  "x-topics": [
+    {
+            "title": "Build a POS integration",
+            "content": "To build the POS integration, please use follow these steps [**here**](https://resources.developers.deliverect.com/en/articles/13628895-pos-integration-overview)"
+        }
+  ],
   "security": [
     {
       "bearerAuth": []
