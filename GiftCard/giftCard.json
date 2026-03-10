@@ -1,0 +1,199 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gift Cards",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "{{restUrl}}giftCards"
+    },
+    {
+      "url": "{{restUrl}}registerProfile"
+    }
+  ],
+  "paths": {
+    "/channel/{channelLinkId}/providerProfileLinks": {
+      "get": {
+        "summary": "Get profile links",
+        "responses": {},
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "channelLinkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{channelLinkId}}"
+        }
+      ]
+    },
+    "/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/getGiftCardBalance": {
+      "post": {
+        "summary": "Get balance",
+        "responses": {},
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "format": "color"
+                  },
+                  "verificationCode": {
+                    "type": "string",
+                    "format": "utc-millisec"
+                  }
+                }
+              },
+              "example": {
+                "number": "ABC",
+                "verificationCode": "1234"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "channelLinkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{channelLinkId}}"
+        },
+        {
+          "name": "giftCardProviderProfileLinkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{giftCardProviderProfileLinkId}}"
+        }
+      ]
+    },
+    "/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/applyGiftCard": {
+      "post": {
+        "summary": "Apply gift card",
+        "responses": {},
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "format": "color"
+                  },
+                  "verificationCode": {
+                    "type": "string",
+                    "format": "utc-millisec"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "number": "ABC",
+                "verificationCode": "1234",
+                "amount": 100
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "channelLinkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{channelLinkId}}"
+        },
+        {
+          "name": "giftCardProviderProfileLinkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "{{giftCardProviderProfileLinkId}}"
+        }
+      ]
+    },
+    "/": {
+      "post": {
+        "summary": "Register profile",
+        "responses": {},
+        "tags": [
+          "Partner Endpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string"
+                  },
+                  "apiKey": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "account": "string",
+                "apiKey": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

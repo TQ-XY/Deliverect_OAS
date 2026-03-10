@@ -5,7 +5,7 @@
         "version": "1.0.0"
     },
     "paths": {
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers/%7B%7BcrmCustomerId%7D%7D/orders": {
+        "/crm/admin/{{accountId}}/customers/{{crmCustomerId}}/orders": {
             "get": {
                 "summary": "Get customer orders (customerId)",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_orders_customerid_bru",
@@ -165,7 +165,7 @@
                 ]
             }
         },
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers/orders": {
+        "/crm/admin/{{accountId}}/customers/orders": {
             "post": {
                 "summary": "Get customer orders",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_orders_bru",
@@ -296,7 +296,7 @@
                 }
             }
         },
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers/%7B%7BcrmCustomerId%7D%7D": {
+        "/crm/admin/{{accountId}}/customers/{{crmCustomerId}}": {
             "get": {
                 "summary": "Get customer",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_bru",
@@ -425,7 +425,7 @@
                 ]
             }
         },
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers": {
+        "/crm/admin/{{accountId}}/customers": {
             "get": {
                 "summary": "Get customers",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customers_bru",
@@ -667,7 +667,7 @@
                 ]
             }
         },
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers/orders/lookup": {
+        "/crm/admin/{{accountId}}/customers/orders/lookup": {
             "post": {
                 "summary": "Lookup customer orders",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_lookup_customer_orders_bru",
@@ -798,7 +798,7 @@
                 }
             }
         },
-        "//crm/admin/%7B%7BaccountId%7D%7D/customers/lookup": {
+        "/crm/admin/{{accountId}}/customers/lookup": {
             "post": {
                 "summary": "Lookup customers",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_lookup_customers_bru",
@@ -952,7 +952,7 @@
                 }
             }
         },
-        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers": {
+        "/crm/channel/{{channelLinkId}}/customers": {
             "post": {
                 "summary": "Create customer",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_create_customer_bru",
@@ -1024,7 +1024,7 @@
                 }
             }
         },
-        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/lookup": {
+        "/crm/channel/{{channelLinkId}}/customers/lookup": {
             "post": {
                 "summary": "Get customer by email",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_by_email_bru",
@@ -1116,7 +1116,7 @@
                 }
             }
         },
-        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/%7B%7BcrmProfileId%7D%7D": {
+        "/crm/channel/{{channelLinkId}}/customers/{{crmProfileId}}": {
             "get": {
                 "summary": "Get customer by id",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_by_id_bru",
@@ -1205,7 +1205,7 @@
                 ]
             }
         },
-        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/%7B%7BcrmProfileId%7D%7D/orders": {
+        "/crm/channel/{{channelLinkId}}/customers/{{crmProfileId}}/orders": {
             "get": {
                 "summary": "Get customer orders",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_orders_bru",
@@ -1725,7 +1725,7 @@
                 ]
             }
         },
-        "//deliverect/testOrder/%7B%7BchannelLinkId%7D%7D": {
+        "/deliverect/testOrder/{{channelLinkId}}": {
             "post": {
                 "summary": "Send Order",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_useful_send_order_bru",
