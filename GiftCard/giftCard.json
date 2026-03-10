@@ -17,7 +17,43 @@
     "/channel/{channelLinkId}/providerProfileLinks": {
       "get": {
         "summary": "Get profile links",
-        "responses": {},
+        "responses": {
+          
+          "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "giftCardProviderProfileLinks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "giftCardProviderProfileLinks": [
+                      {
+                        "id": "{{giftCardProviderProfileLinkId}}",
+                        "name": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+        },
         "tags": [
           "Deliverect Endpoints"
         ],
@@ -42,7 +78,26 @@
     "/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/getGiftCardBalance": {
       "post": {
         "summary": "Get balance",
-        "responses": {},
+        "responses": {
+            "200": {
+                "description": "OK",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "example": {
+                      "balance": 100
+                    }
+                  }
+                }
+              }
+        },
         "tags": [
           "Deliverect Endpoints"
         ],
@@ -99,7 +154,26 @@
     "/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/applyGiftCard": {
       "post": {
         "summary": "Apply gift card",
-        "responses": {},
+        "responses": {
+            "200": {
+                "description": "OK",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "example": {
+                      "balance": 100
+                    }
+                  }
+                }
+              }
+        },
         "tags": [
           "Deliverect Endpoints"
         ],
@@ -160,7 +234,11 @@
     "/": {
       "post": {
         "summary": "Register profile",
-        "responses": {},
+        "responses": {
+            "200": {
+                "description": "OK"
+              } 
+        },
         "tags": [
           "Partner Endpoints"
         ],
