@@ -1,0 +1,2054 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "crm",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers/%7B%7BcrmCustomerId%7D%7D/orders": {
+            "get": {
+                "summary": "Get customer orders (customerId)",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_orders_customerid_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        },
+                                                        "amount": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "value": {
+                                                                    "type": "number"
+                                                                },
+                                                                "currency": {
+                                                                    "type": "string"
+                                                                },
+                                                                "display": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 1,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "orderDisplayId": "c55a7d13-ee3d-49dc-8784-bef1f9dd1c5c",
+                                            "orderDate": "2025-10-31T14:37:31.898000Z",
+                                            "channel": 20002,
+                                            "orderType": 2,
+                                            "locationId": "68d81e687e6400e6581fc5a9",
+                                            "amount": {
+                                                "value": 100,
+                                                "currency": "EUR",
+                                                "display": "1.00"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "orderType",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "2"
+                    },
+                    {
+                        "name": "channel",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "20002"
+                    },
+                    {
+                        "name": "locationId",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "68d81e687e6400e6581fc5a9"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ]
+            }
+        },
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers/orders": {
+            "post": {
+                "summary": "Get customer orders",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_orders_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        },
+                                                        "amount": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "value": {
+                                                                    "type": "number"
+                                                                },
+                                                                "currency": {
+                                                                    "type": "string"
+                                                                },
+                                                                "display": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 1,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "orderDisplayId": "c55a7d13-ee3d-49dc-8784-bef1f9dd1c5c",
+                                            "orderDate": "2025-10-31T14:37:31.898000Z",
+                                            "channel": 20002,
+                                            "orderType": 2,
+                                            "locationId": "68d81e687e6400e6581fc5a9",
+                                            "amount": {
+                                                "value": 100,
+                                                "currency": "EUR",
+                                                "display": "1.00"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/get_customer_orders"
+                }
+            }
+        },
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers/%7B%7BcrmCustomerId%7D%7D": {
+            "get": {
+                "summary": "Get customer",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customer_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "fullName": {
+                                            "type": "string"
+                                        },
+                                        "lastPurchaseDate": {
+                                            "type": "string"
+                                        },
+                                        "phone": {
+                                            "type": "object"
+                                        },
+                                        "customerId": {
+                                            "type": "string"
+                                        },
+                                        "statistics": {
+                                            "type": "object",
+                                            "properties": {
+                                                "totalOrders": {
+                                                    "type": "number"
+                                                },
+                                                "totalPurchaseAmount": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "number"
+                                                        },
+                                                        "currency": {
+                                                            "type": "string"
+                                                        },
+                                                        "display": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "averageOrderValue": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "number"
+                                                        },
+                                                        "currency": {
+                                                            "type": "string"
+                                                        },
+                                                        "display": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "email": "john.doe@example.com",
+                                    "fullName": "John Doe",
+                                    "lastPurchaseDate": "2025-10-31T14:34:12.636000Z",
+                                    "phone": null,
+                                    "customerId": "zqTeSTMFcZc4ylr-A1DRp4GqSQZ2j2M6T_n3ao6jC4zuQqRVIzpWlLQvVMinO2ct7uYvUPz7YM10T26pyA",
+                                    "statistics": {
+                                        "totalOrders": 12,
+                                        "totalPurchaseAmount": {
+                                            "value": 6557,
+                                            "currency": "EUR",
+                                            "display": "65.57"
+                                        },
+                                        "averageOrderValue": {
+                                            "value": 546,
+                                            "currency": "EUR",
+                                            "display": "5.46"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ]
+            }
+        },
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers": {
+            "get": {
+                "summary": "Get customers",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_get_customers_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "customerId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "1": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "customerId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "2": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "customerId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "3": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "customerId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "4": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "object"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "customerId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 5,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "email": "john.doe@example.com",
+                                            "fullName": "John Doe",
+                                            "totalOrders": 12,
+                                            "lastPurchaseDate": "2025-10-31T14:34:12.636000Z",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "customerId": "nvd5EEwnW3m92y_DFMEvSq0wMNaw5UdjyB9h-0aeqlE8v0eK8NtZXEsViPDnBBySUG7JJECegYBWpUlhGvc"
+                                        },
+                                        {
+                                            "email": "alice.smith@example.com",
+                                            "fullName": "Alice Smith",
+                                            "totalOrders": 1,
+                                            "lastPurchaseDate": "2025-10-31T14:37:31.898000Z",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "customerId": "NZc_pJDRjGeKHhR0gruufxoholiUFykFA6HOowJd6ukekLaSROWYZuBkKt0yGScKGk450Qw-g92erM098Aj_QRIVziHw4Rk"
+                                        },
+                                        {
+                                            "email": "bob.jones@example.com",
+                                            "fullName": "Bob Jones",
+                                            "totalOrders": 2,
+                                            "lastPurchaseDate": "2025-10-24T16:51:03.249000Z",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "customerId": "wH0n04wfx7Df7OE2ND5Osd0-aGmHp89YDLEoIEaT2xgZGqM4b76ijMNAtxwD47pVv0lqO-NfjqUo6w"
+                                        },
+                                        {
+                                            "email": "charlie.brown@example.com",
+                                            "fullName": "Charlie Brown",
+                                            "totalOrders": 6,
+                                            "lastPurchaseDate": "2025-10-24T16:45:14.665000Z",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "customerId": "1n86FgDi205qoxaMuHvdS0nymnS76QSzA4hCex6ajtWx4BMcqLqPOlGoB7fWTaPKTcney4IGJinbtM3m"
+                                        },
+                                        {
+                                            "email": "eve.williams@example.com",
+                                            "fullName": "Eve Williams",
+                                            "totalOrders": 0,
+                                            "lastPurchaseDate": null,
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "customerId": "yAF1BL4Nyt2uOwkoVoJKc4Ga4hsGIBzELUGiJjB6g2gmgpB_pmYtONTWCI4pxLbVqm3d63Fs"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "security": [
+                    {
+                        "get_customers": []
+                    }
+                ]
+            }
+        },
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers/orders/lookup": {
+            "post": {
+                "summary": "Lookup customer orders",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_lookup_customer_orders_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        },
+                                                        "amount": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "value": {
+                                                                    "type": "number"
+                                                                },
+                                                                "currency": {
+                                                                    "type": "string"
+                                                                },
+                                                                "display": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 1,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "orderDisplayId": "c55a7d13-ee3d-49dc-8784-bef1f9dd1c5c",
+                                            "orderDate": "2025-10-31T14:37:31.898000Z",
+                                            "channel": 20002,
+                                            "orderType": 2,
+                                            "locationId": "68d81e687e6400e6581fc5a9",
+                                            "amount": {
+                                                "value": 100,
+                                                "currency": "EUR",
+                                                "display": "1.00"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/lookup_customer_orders"
+                }
+            }
+        },
+        "//crm/admin/%7B%7BaccountId%7D%7D/customers/lookup": {
+            "post": {
+                "summary": "Lookup customers",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_admin_lookup_customers_bru",
+                "description": "",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "1": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "2": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "fullName": {
+                                                            "type": "string"
+                                                        },
+                                                        "totalOrders": {
+                                                            "type": "number"
+                                                        },
+                                                        "lastPurchaseDate": {
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 3,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "email": "john.doe@example.com",
+                                            "fullName": "John Doe",
+                                            "totalOrders": 1,
+                                            "lastPurchaseDate": "2025-10-31T14:37:31.898000Z"
+                                        },
+                                        {
+                                            "email": "alice.smith@example.com",
+                                            "fullName": "Alice Smith",
+                                            "totalOrders": 2,
+                                            "lastPurchaseDate": "2025-10-24T16:51:03.249000Z"
+                                        },
+                                        {
+                                            "email": "bob.jones@example.com",
+                                            "fullName": "Bob Jones",
+                                            "totalOrders": 0,
+                                            "lastPurchaseDate": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/lookup_customers"
+                }
+            }
+        },
+        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers": {
+            "post": {
+                "summary": "Create customer",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_create_customer_bru",
+                "description": "",
+                "tags": [
+                    "Channel"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "contact": {
+                                            "type": "object",
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "type": "object"
+                                                },
+                                                "fullName": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "id": "6916331312c63ca1f6cca94b",
+                                    "contact": {
+                                        "email": "john.doe@example.com",
+                                        "firstName": "John",
+                                        "lastName": "Doe",
+                                        "phone": null,
+                                        "fullName": "John Doe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/create_customer"
+                }
+            }
+        },
+        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/lookup": {
+            "post": {
+                "summary": "Get customer by email",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_by_email_bru",
+                "description": "",
+                "tags": [
+                    "Channel"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "accountId": {
+                                            "type": "string"
+                                        },
+                                        "externalId": {
+                                            "type": "object"
+                                        },
+                                        "channel": {
+                                            "type": "number"
+                                        },
+                                        "created": {
+                                            "type": "string"
+                                        },
+                                        "updated": {
+                                            "type": "string"
+                                        },
+                                        "contact": {
+                                            "type": "object",
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "type": "object"
+                                                },
+                                                "fullName": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "id": "690e2d795db983ea662cec6a",
+                                    "accountId": "68d81ae5bbd981dd03137bdd",
+                                    "externalId": null,
+                                    "channel": 10027,
+                                    "created": "2025-11-07T17:33:45.805000Z",
+                                    "updated": "2025-11-07T17:33:45.805000Z",
+                                    "contact": {
+                                        "email": "john.doe@example.com",
+                                        "firstName": "John",
+                                        "lastName": "Doe",
+                                        "phone": null,
+                                        "fullName": "John Doe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/get_customer_by_email"
+                }
+            }
+        },
+        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/%7B%7BcrmProfileId%7D%7D": {
+            "get": {
+                "summary": "Get customer by id",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_by_id_bru",
+                "description": "",
+                "tags": [
+                    "Channel"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "accountId": {
+                                            "type": "string"
+                                        },
+                                        "externalId": {
+                                            "type": "object"
+                                        },
+                                        "channel": {
+                                            "type": "number"
+                                        },
+                                        "created": {
+                                            "type": "string"
+                                        },
+                                        "updated": {
+                                            "type": "string"
+                                        },
+                                        "contact": {
+                                            "type": "object",
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "type": "object"
+                                                },
+                                                "fullName": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "id": "690e2d795db983ea662cec6a",
+                                    "accountId": "68d81ae5bbd981dd03137bdd",
+                                    "externalId": null,
+                                    "channel": 10027,
+                                    "created": "2025-11-07T17:33:45.805000Z",
+                                    "updated": "2025-11-07T17:33:45.805000Z",
+                                    "contact": {
+                                        "email": "john.doe@example.com",
+                                        "firstName": "John",
+                                        "lastName": "Doe",
+                                        "phone": null,
+                                        "fullName": "John Doe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ]
+            }
+        },
+        "//crm/channel/%7B%7BchannelLinkId%7D%7D/customers/%7B%7BcrmProfileId%7D%7D/orders": {
+            "get": {
+                "summary": "Get customer orders",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_channel_get_customer_orders_bru",
+                "description": "",
+                "tags": [
+                    "Channel"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "number"
+                                        },
+                                        "page": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "number"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "0": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "1": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "2": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "3": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "4": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "5": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "crmProfileId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderId": {
+                                                            "type": "string"
+                                                        },
+                                                        "accountId": {
+                                                            "type": "string"
+                                                        },
+                                                        "channel": {
+                                                            "type": "number"
+                                                        },
+                                                        "payment": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "amount": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "currency": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "display": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "orderDisplayId": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderDate": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderType": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemQuantity": {
+                                                            "type": "number"
+                                                        },
+                                                        "locationId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "total": 6,
+                                    "page": 1,
+                                    "size": 50,
+                                    "items": [
+                                        {
+                                            "id": "68fbad1a640ae0b44384af2f",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fbad1aa8a2ab7006c48c86",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "20a2baad-2053-407c-b265-fa21c8a10758",
+                                            "orderDate": "2025-10-24T16:45:14.665000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        },
+                                        {
+                                            "id": "68fbac6d640ae0b44384af29",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fbac6da8a2ab7006c48c76",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "3dd773b1-2844-44f1-b33d-0ebc7c7fe2cf",
+                                            "orderDate": "2025-10-24T16:42:21.527000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        },
+                                        {
+                                            "id": "68fbab62640ae0b44384af1e",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fbab62a8a2ab7006c48c56",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "cbb56e22-a7a4-4d99-b395-c5b01802b60b",
+                                            "orderDate": "2025-10-24T16:37:54.649000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        },
+                                        {
+                                            "id": "68fba5ec640ae0b44384af18",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fba5e7a8a2ab7006c48c45",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "29348ba1-7e64-42f5-bb9f-da09bf5eb788",
+                                            "orderDate": "2025-10-24T16:14:31.793000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        },
+                                        {
+                                            "id": "68fba571640ae0b44384af12",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fba56da8a2ab7006c48c35",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "698c81f7-02e6-4c61-a09a-a681827e69d3",
+                                            "orderDate": "2025-10-24T16:12:29.863000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        },
+                                        {
+                                            "id": "68fba2d36b1fe97ada379842",
+                                            "crmProfileId": "68fb6af9a6e06e236a12824b",
+                                            "orderId": "68fba2cdb4275fb21083f66a",
+                                            "accountId": "68d81ae5bbd981dd03137bdd",
+                                            "channel": 20002,
+                                            "payment": {
+                                                "amount": {
+                                                    "value": 100,
+                                                    "currency": "EUR",
+                                                    "display": "1.00"
+                                                }
+                                            },
+                                            "orderDisplayId": "389e94bd-67f3-4cd5-8973-8784992657cb",
+                                            "orderDate": "2025-10-24T16:01:17.088000Z",
+                                            "orderType": 2,
+                                            "itemQuantity": 1,
+                                            "locationId": "68d81e687e6400e6581fc5a9"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "example": "50"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "application/json"
+                    }
+                ]
+            }
+        },
+        "//deliverect/testOrder/%7B%7BchannelLinkId%7D%7D": {
+            "post": {
+                "summary": "Send Order",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_deliverect_crm_useful_send_order_bru",
+                "description": "",
+                "tags": [
+                    "Useful"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/send_order"
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://api.staging.deliverect.com"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "get_customer_orders": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "lookup_customer_orders": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "channel": {
+                        "type": "string"
+                    },
+                    "orderType": {
+                        "type": "number"
+                    }
+                }
+            },
+            "lookup_customers": {
+                "type": "object",
+                "properties": {}
+            },
+            "create_customer": {
+                "type": "object",
+                "properties": {
+                    "contact": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "get_customer_by_email": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "send_order": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "properties": {
+                            "0": {
+                                "type": "object",
+                                "properties": {
+                                    "plu": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "quantity": {
+                                        "type": "number"
+                                    },
+                                    "subItems": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "productType": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "decimalDigits": {
+                        "type": "number"
+                    },
+                    "numberOfCustomers": {
+                        "type": "number"
+                    },
+                    "by": {
+                        "type": "string"
+                    },
+                    "courier": {
+                        "type": "string"
+                    },
+                    "channel": {
+                        "type": "number"
+                    },
+                    "payment": {
+                        "type": "object",
+                        "properties": {
+                            "amount": {
+                                "type": "number"
+                            },
+                            "type": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "payments": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "orderType": {
+                        "type": "number"
+                    },
+                    "deliveryAddress": {
+                        "type": "object",
+                        "properties": {
+                            "street": {
+                                "type": "string"
+                            },
+                            "streetNumber": {
+                                "type": "string"
+                            },
+                            "postalCode": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "extraAddressInfo": {
+                                "type": "string"
+                            },
+                            "area": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "deliveryCost": {
+                        "type": "number"
+                    },
+                    "serviceCharge": {
+                        "type": "number"
+                    },
+                    "discountTotal": {
+                        "type": "number"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "customer": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "companyName": {
+                                "type": "string"
+                            },
+                            "phoneNumber": {
+                                "type": "string"
+                            },
+                            "phoneAccessCode": {
+                                "type": "string"
+                            },
+                            "note": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "isCustomerSupported": {
+                        "type": "boolean"
+                    },
+                    "orderIsAlreadyPaid": {
+                        "type": "boolean"
+                    },
+                    "deliveryIsAsap": {
+                        "type": "boolean"
+                    },
+                    "testOrder": {
+                        "type": "boolean"
+                    },
+                    "deliveryTime": {
+                        "type": "string"
+                    },
+                    "bagFee": {
+                        "type": "number"
+                    },
+                    "tip": {
+                        "type": "number"
+                    },
+                    "pickupTime": {
+                        "type": "string"
+                    },
+                    "estimatedPickupTime": {
+                        "type": "object"
+                    },
+                    "locationId": {
+                        "type": "string"
+                    },
+                    "posLocationId": {
+                        "type": "string"
+                    },
+                    "channelOrderId": {
+                        "type": "string"
+                    },
+                    "channelOrderDisplayId": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "requestBodies": {
+            "get_customer_orders": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/get_customer_orders"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "lookup_customer_orders": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/lookup_customer_orders"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "lookup_customers": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/lookup_customers"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "create_customer": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/create_customer"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "get_customer_by_email": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/get_customer_by_email"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "send_order": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/send_order"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            }
+        },
+        "securitySchemes": {
+            "get_customers": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
