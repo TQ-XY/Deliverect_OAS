@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: Coupons
+  version: 1.0.0
+paths:
+  /coupons/%7B%7BchannelLinkId%7D%7D/coupons:
+    get:
+      summary: Get Coupons
+      operationId: users_taoufiqqyes_deliverect_bruno_coupons_api_get_coupons_yml
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+  /coupons/admin/%7B%7BaccountId%7D%7D/coupons:
+    get:
+      summary: Validate Coupon
+      operationId: users_taoufiqqyes_deliverect_bruno_coupons_api_validate_coupon_yml
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+servers:
+  - url: https://api.staging.deliverect.com
+components:
+  schemas: {}
+  requestBodies: {}
+  securitySchemes: {}

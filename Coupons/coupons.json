@@ -1,0 +1,71 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Coupons",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/coupons/{{channelLinkId}}/coupons": {
+      "get": {
+        "summary": "Get Coupons",
+        "operationId": "get_coupons",
+        "description": "",
+        "tags": [
+          ""
+        ],
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "description": "The channel link ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/coupons/admin/{{accountId}}/coupons": {
+      "get": {
+        "summary": "Validate Coupon",
+        "operationId": "validate_coupon",
+        "description": "",
+        "tags": [
+          ""
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "The account ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "requestBodies": {},
+    "securitySchemes": {}
+  }
+}
