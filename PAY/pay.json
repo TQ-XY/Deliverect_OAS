@@ -1,0 +1,456 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "pay",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/pay/channel/68b13d4b080a71bc44664cc8/gatewayProfiles": {
+            "get": {
+                "summary": "Get Payment Gateways",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_get_payment_gateways_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "get_payment_gateways": []
+                    }
+                ]
+            }
+        },
+        "/pay/channel/68b13d4b080a71bc44664cc8/payments/{{paymentId}}": {
+            "get": {
+                "summary": "Get Payment",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_get_payment_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "get_payment": []
+                    }
+                ]
+            }
+        },
+        "//pay/channel/68b13d4b080a71bc44664cc8/payments/request": {
+            "post": {
+                "summary": "Request Payment",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_request_payment_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/request_payment"
+                },
+                "security": [
+                    {
+                        "request_payment": []
+                    }
+                ]
+            }
+        },
+        "/generic/channelLinks/68b13d4b080a71bc44664cc8/paymentProfile": {
+            "get": {
+                "summary": "Get Payment Profile",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_get_payment_profile_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "get_payment_profile": []
+                    }
+                ]
+            }
+        },
+        "//{{channel}}/channelLinks/{{channeLinkId}}/payments/url": {
+            "post": {
+                "summary": "Get Payment URL",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_get_payment_url_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/get_payment_url"
+                },
+                "security": [
+                    {
+                        "get_payment_url": []
+                    }
+                ]
+            }
+        },
+        "/{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}": {
+            "get": {
+                "summary": "Get Payment",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_get_payment_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "//{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}/refund": {
+            "post": {
+                "summary": "Refund Payment",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_refund_payment_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "refund_payment": []
+                    }
+                ]
+            }
+        },
+        "//pay/events/{{integrationName}}/gatewayProfiles/{{gatewayProfileId}}": {
+            "post": {
+                "summary": "Payment Events",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_partner_webhooks_events_payment_events_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/payment_events"
+                },
+                "security": [
+                    {
+                        "payment_events": []
+                    }
+                ]
+            }
+        },
+        "/": {
+            "post": {
+                "summary": "Request Payment",
+                "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_partner_webhooks_events_request_payment_bru",
+                "description": "",
+                "tags": [
+                    "Pay API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://api.staging.deliverect.com"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "request_payment": {
+                "type": "object",
+                "properties": {
+                    "gatewayProfileId": {
+                        "type": "string"
+                    },
+                    "mode": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "returnUrl": {
+                                "type": "string"
+                            },
+                            "logoUrl": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "amount": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "payableReference": {
+                        "type": "string"
+                    },
+                    "payer": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "reference": {
+                                "type": "string"
+                            },
+                            "ip": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "payable": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "properties": {
+                                    "0": {
+                                        "type": "object",
+                                        "properties": {
+                                            "quantity": {
+                                                "type": "number"
+                                            },
+                                            "plu": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "unitPrice": {
+                                                "type": "number"
+                                            },
+                                            "total": {
+                                                "type": "number"
+                                            },
+                                            "taxTotal": {
+                                                "type": "number"
+                                            },
+                                            "discountTotal": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "billingAddress": {
+                        "type": "object",
+                        "properties": {
+                            "country": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "stateOrProvince": {
+                                "type": "string"
+                            },
+                            "postalCode": {
+                                "type": "string"
+                            },
+                            "street": {
+                                "type": "string"
+                            },
+                            "houseNumber": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "get_payment_url": {
+                "type": "object",
+                "properties": {
+                    "returnUrl": {
+                        "type": "string"
+                    },
+                    "logoUrl": {
+                        "type": "string"
+                    }
+                }
+            },
+            "payment_events": {
+                "type": "object",
+                "properties": {
+                    "eventType": {
+                        "type": "string"
+                    },
+                    "gatewayId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "method": {
+                        "type": "string"
+                    }
+                }
+            },
+            "refund_payment": {
+                "type": "object",
+                "properties": {
+                    "paymentId": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                }
+            },
+            "register_profile": {
+                "type": "object",
+                "properties": {
+                    "gatewayProfileId": {
+                        "type": "string"
+                    },
+                    "accountId": {
+                        "type": "string"
+                    },
+                    "apiKey": {
+                        "type": "string"
+                    },
+                    "webhookUrl": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "requestBodies": {
+            "request_payment": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/request_payment"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "get_payment_url": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/get_payment_url"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "payment_events": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/payment_events"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "refund_payment": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/refund_payment"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            },
+            "register_profile": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/register_profile"
+                        }
+                    }
+                },
+                "description": "",
+                "required": true
+            }
+        },
+        "securitySchemes": {
+            "get_payment_gateways": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "get_payment": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "request_payment": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "get_payment_profile": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "get_payment_url": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "refund_payment": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "payment_events": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
