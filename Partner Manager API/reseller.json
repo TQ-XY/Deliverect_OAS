@@ -1,0 +1,667 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "pay",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/resellers/{partner}/account": {
+            "parameters": [
+                {
+                    "name": "partner",
+                    "in": "path",
+                    "required": true,
+                    "description": "Unique identifier of the reseller partner",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "post": {
+                "summary": "Create Account",
+                "description": "Creates a new account in Deliverect’s system after a sale has been completed on the partner's side. Account configuration must be sent in the request body.",
+                "operationId": "creates-a-new-account",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "account_id",
+                                    "street",
+                                    "postal_code",
+                                    "city",
+                                    "country",
+                                    "phone",
+                                    "email_billing",
+                                    "first_name_billing",
+                                    "last_name_billing",
+                                    "business_name",
+                                    "currency"
+                                ],
+                                "properties": {
+                                    "account_id": {
+                                        "type": "string"
+                                    },
+                                    "street": {
+                                        "type": "string"
+                                    },
+                                    "postal_code": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "email_billing": {
+                                        "type": "string"
+                                    },
+                                    "first_name_billing": {
+                                        "type": "string"
+                                    },
+                                    "last_name_billing": {
+                                        "type": "string"
+                                    },
+                                    "business_name": {
+                                        "type": "string"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "type_business": {
+                                        "type": "string"
+                                    },
+                                    "first_name_sales": {
+                                        "type": "string"
+                                    },
+                                    "last_name_sales": {
+                                        "type": "string"
+                                    },
+                                    "email_sales": {
+                                        "type": "string"
+                                    },
+                                    "locations": {
+                                        "properties": {
+                                            "location_name": {
+                                                "type": "string"
+                                            },
+                                            "location_id": {
+                                                "type": "string"
+                                            },
+                                            "core_product": {
+                                                "type": "string"
+                                            },
+                                            "number_virtual_brands": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "billing_frequency": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "ready_onboard": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "location_name"
+                                        ],
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Create Account": {
+                                    "value": {
+                                        "account_id": "XXXXX",
+                                        "street": "Example street",
+                                        "postal_code": "100000",
+                                        "city": "London",
+                                        "country": "UK",
+                                        "phone": "+17812054111",
+                                        "email_billing": "test@test.com",
+                                        "first_name_billing": "Andrea",
+                                        "last_name_billing": "Deliverect",
+                                        "business_name": "Andrea's little shop",
+                                        "currency": "GBP",
+                                        "type_business": "SMB",
+                                        "locations": [
+                                            {
+                                                "location_name": "Andrea's little shop - Downtown",
+                                                "location_id": "XXXXX-1",
+                                                "core_product": "Unlimited",
+                                                "billing_frequency": "M",
+                                                "status": "active"
+                                            },
+                                            {
+                                                "location_name": "Andrea's little shop - Upper East",
+                                                "location_id": "XXXXX-2",
+                                                "core_product": "Unlimited",
+                                                "billing_frequency": "M",
+                                                "status": "active"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "201",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "OK" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "field currency is missing" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "field currency is missing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": {"response": 404}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "409",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": " {response: custom message depending on the error}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": {response: “Please try again”}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "503",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": {response: “Please try again”}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/{partner}/account": {
+            "parameters": [
+                {
+                    "name": "partner",
+                    "in": "path",
+                    "required": true,
+                    "description": "Unique identifier of the partner",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "patch": {
+                "summary": "Update Account",
+                "description": "Updates the information of an existing account in the Deliverect system if a change has been made in the partner system. Example: business email has changed or the billing end date has been extended.",
+                "operationId": "update-existing-account",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "account_id"
+                                ],
+                                "properties": {
+                                    "account_id": {
+                                        "type": "string"
+                                    },
+                                    "street": {
+                                        "type": "string"
+                                    },
+                                    "postal_code": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "email_billing": {
+                                        "type": "string"
+                                    },
+                                    "first_name_billing": {
+                                        "type": "string"
+                                    },
+                                    "last_name_billing": {
+                                        "type": "string"
+                                    },
+                                    "business_name": {
+                                        "type": "string"
+                                    },
+                                    "billing_start_date": {
+                                        "type": "string"
+                                    },
+                                    "billing_end_date": {
+                                        "type": "string"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "type_business": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Update Account": {
+                                    "value": {
+                                        "account_id": "XXXXX",
+                                        "phone": "+34617745132"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "OK" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "No account found with id YUB78q" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "No account found with id YUB78q"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/{partner}/location": {
+            "parameters": [
+                {
+                    "name": "partner",
+                    "in": "path",
+                    "required": true,
+                    "description": "Unique identifier of the partner",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "post": {
+                "summary": "Create Location/Subscription",
+                "description": "Creates a new location/subscription in Deliverect’s system after a new subscription on an existing account has been completed on the partners side.",
+                "operationId": "creates-a-new-locationsubscription",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "account_id"
+                                ],
+                                "properties": {
+                                    "account_id": {
+                                        "type": "string"
+                                    },
+                                    "locations": {
+                                        "properties": {
+                                            "location_name": {
+                                                "type": "string"
+                                            },
+                                            "location_id": {
+                                                "type": "string"
+                                            },
+                                            "core_product": {
+                                                "type": "string"
+                                            },
+                                            "number_virtual_brands": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "ready_onboard": {
+                                                "type": "boolean"
+                                            },
+                                            "billing_frequency": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "location_name",
+                                            "location_id",
+                                            "core_product"
+                                        ],
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Create Location/Subscription": {
+                                    "value": {
+                                        "account_id": "XXXXX",
+                                        "locations": [
+                                            {
+                                                "location_name": "Andrea' s little shop - Finsbury Park",
+                                                "location_id": "XXXXX-3",
+                                                "core_product": "Unlimited",
+                                                "billing_frequency": "M"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "OK" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "A location with ID XXXXX-2 already exists in the account XXXXX" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "A location with ID XXXXX-2 already exists in the account XXXXX"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404",
+                        "content": {
+                            "text/plain": {
+                                "examples": {
+                                    "URI path is incorrect": {
+                                        "value": ""
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": {response: “Please try again”}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "503",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": {response: “Please try again”}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "patch": {
+                "summary": "Update Location/Subscription",
+                "description": "Updates a new location/subscription in Deliverect system after a change has been registered on the partners side. Example: Subscription canceled",
+                "operationId": "update-locationsubscription",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "api_key",
+                                    "account_id"
+                                ],
+                                "properties": {
+                                    "api_key": {
+                                        "type": "string"
+                                    },
+                                    "account_id": {
+                                        "type": "string"
+                                    },
+                                    "locations": {
+                                        "properties": {
+                                            "location_name": {
+                                                "type": "string"
+                                            },
+                                            "location_id": {
+                                                "type": "string"
+                                            },
+                                            "core_product": {
+                                                "type": "string"
+                                            },
+                                            "number_virtual_brands": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "ready_onboard": {
+                                                "type": "boolean"
+                                            },
+                                            "billing_frequency": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "location_name",
+                                            "location_id"
+                                        ],
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Update Location/Subscription": {
+                                    "value": {
+                                        "account_id": "XXXXX",
+                                        "locations": [
+                                            {
+                                                "status": "Canceled",
+                                                "location_id": "XXXXX-3"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "OK" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "response": "locations cannot be an empty array" } 
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "locations cannot be an empty array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+"servers": [
+    {
+        "url": "https://api.staging.deliverect.com"
+    }
+],
+"components": {
+    "schemas": {
+    }
+}
+}

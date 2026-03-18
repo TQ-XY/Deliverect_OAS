@@ -5,7 +5,7 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/pay/channel/68b13d4b080a71bc44664cc8/gatewayProfiles": {
+        "/pay/channel/{{channelLinkId}}/gatewayProfiles": {
             "get": {
                 "summary": "Get Payment Gateways",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_get_payment_gateways_bru",
@@ -25,7 +25,7 @@
                 ]
             }
         },
-        "/pay/channel/68b13d4b080a71bc44664cc8/payments/{{paymentId}}": {
+        "/pay/channel/{{channelLinkId}}/payments/{{paymentId}}": {
             "get": {
                 "summary": "Get Payment",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_get_payment_bru",
@@ -45,7 +45,7 @@
                 ]
             }
         },
-        "//pay/channel/68b13d4b080a71bc44664cc8/payments/request": {
+        "//pay/channel/{{channelLinkId}}/payments/request": {
             "post": {
                 "summary": "Request Payment",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_request_payment_bru",
@@ -68,7 +68,7 @@
                 ]
             }
         },
-        "/generic/channelLinks/68b13d4b080a71bc44664cc8/paymentProfile": {
+        "/generic/channelLinks/{{channelLinkId}}/paymentProfile": {
             "get": {
                 "summary": "Get Payment Profile",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_get_payment_profile_bru",
@@ -111,7 +111,7 @@
                 ]
             }
         },
-        "/{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}": {
+        "/{{channel}}/channelLinks/{{channelLinkId}}/payments/{{paymentId}}": {
             "get": {
                 "summary": "Get Payment",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_get_payment_bru",
@@ -126,7 +126,7 @@
                 }
             }
         },
-        "//{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}/refund": {
+        "//{{channel}}/channelLinks/{{channelLinkId}}/payments/{{paymentId}}/refund": {
             "post": {
                 "summary": "Refund Payment",
                 "operationId": "users_taoufiqqyes_deliverect_bruno_pay_api_pay_api_channel_endpoints_legacy_refund_payment_bru",

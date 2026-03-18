@@ -16,7 +16,7 @@ paths:
           description: ''
       security:
         - get_payment_gateways: []
-  /pay/channel/68b13d4b080a71bc44664cc8/payments/%7B%7BpaymentId%7D%7D:
+  /pay/channel/68b13d4b080a71bc44664cc8/payments/{{paymentId}}:
     get:
       summary: Get Payment
       operationId: >-
@@ -57,7 +57,7 @@ paths:
           description: ''
       security:
         - get_payment_profile: []
-  //%7B%7Bchannel%7D%7D/channelLinks/%7B%7BchanneLinkId%7D%7D/payments/url:
+  //{{channel}}/channelLinks/{{channeLinkId}}/payments/url:
     post:
       summary: Get Payment URL
       operationId: >-
@@ -72,7 +72,7 @@ paths:
         $ref: '#/components/requestBodies/get_payment_url'
       security:
         - get_payment_url: []
-  /%7B%7Bchannel%7D%7D/channelLinks/68b13d4b080a71bc44664cc8/payments/%7B%7BpaymentId%7D%7D:
+  /{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}:
     get:
       summary: Get Payment
       operationId: >-
@@ -83,7 +83,7 @@ paths:
       responses:
         '200':
           description: ''
-  //%7B%7Bchannel%7D%7D/channelLinks/68b13d4b080a71bc44664cc8/payments/%7B%7BpaymentId%7D%7D/refund:
+  //{{channel}}/channelLinks/68b13d4b080a71bc44664cc8/payments/{{paymentId}}/refund:
     post:
       summary: Refund Payment
       operationId: >-
@@ -96,7 +96,7 @@ paths:
           description: ''
       security:
         - refund_payment: []
-  //pay/events/%7B%7BintegrationName%7D%7D/gatewayProfiles/%7B%7BgatewayProfileId%7D%7D:
+  //pay/events/{{integrationName}}/gatewayProfiles/{{gatewayProfileId}}:
     post:
       summary: Payment Events
       operationId: >-
