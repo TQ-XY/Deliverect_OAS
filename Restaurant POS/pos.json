@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "https://api.staging.deliverect.com"
+    },
+    {
+      "url": "yourWebhookUrl.com"
     }
   ],
   "security": [

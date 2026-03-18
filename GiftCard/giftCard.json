@@ -10,8 +10,179 @@
       "url": "https://api.staging.deliverect.com"
     }
   ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": " "
+    },
+    {
+      "name": "Deliverect Endpoints",
+      "description": "(Deliverect Endpoints)"
+    }
+  ],
   "paths": {
-    "/": {},
+    "/oauth/token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Machine 2 Machine Access Token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "examples": [
+                  {
+                    "client_id": "{{clientId}}",
+                    "client_secret": "{{clientSecret}}",
+                    "audience": "https://api.satging.deliverect.com",
+                    "grant_type": "token"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "content-type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Accept": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "application/json"
+                  ]
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "application/json"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "Wed, 20 Feb 2019 13:11:39 GMT"
+                  ]
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "application/json"
+                  ]
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "examples": [
+                    "60"
+                  ]
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "keep-alive"
+                  ]
+                }
+              },
+              "X-Auth0-RequestId": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "1bb8a6bbea0c249b00dd"
+                  ]
+                }
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer",
+                  "examples": [
+                    "30"
+                  ]
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer",
+                  "examples": [
+                    "29"
+                  ]
+                }
+              },
+              "X-RateLimit-Reset": {
+                "schema": {
+                  "type": "integer",
+                  "examples": [
+                    "1550668300"
+                  ]
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "Basic realm={{Users}}"
+                  ]
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "examples": [
+                    "private, no-store, no-cache, must-revalidate, post-check=0, pre-check=0"
+                  ]
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "error": "access_denied",
+                  "error_description": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/giftCards/channel/{channelLinkId}/providerProfileLinks": {
       "get": {
         "summary": "Get profile links",
@@ -236,7 +407,9 @@
         },
         "operationId": "post_giftcards-channel-channellinkid-profilelink-giftcardproviderprofilelinkid-getgiftcardbalance"
       }
-    },
+    }
+  },
+  "webhooks": {
     "/registerProfile": {
       "post": {
         "summary": "Register profile",
@@ -273,7 +446,7 @@
                   "Result": {
                     "value": {
                       "redeemGiftCardURL": "https://yourwebhook.com/redeem",
-                      "revertRedeemGiftCardURL": "https: //yourwebhook.com/reverse",
+                      "revertRedeemGiftCardURL": "https://yourwebhook.com/reverse",
                       "getGiftCardBalanceURL": "https://yourwebhook.com/balance"
                     }
                   }
@@ -318,7 +491,8 @@
         "deprecated": false,
         "tags": [
           "Partner Webhooks"
-        ]
+        ],
+        "parameters": []
       }
     },
     "/redeem": {
@@ -363,7 +537,8 @@
         "deprecated": false,
         "tags": [
           "Partner Webhooks"
-        ]
+        ],
+        "parameters": []
       }
     },
     "/reverse": {
@@ -408,10 +583,11 @@
         "deprecated": false,
         "tags": [
           "Partner Webhooks"
-        ]
+        ],
+        "parameters": []
       }
     },
-     "/validateGiftCard": {
+    "/validateGiftCard": {
       "post": {
         "summary": "validate gift card ",
         "description": "",
@@ -453,7 +629,8 @@
         "deprecated": false,
         "tags": [
           "Partner Webhooks"
-        ]
+        ],
+        "parameters": []
       }
     }
   },
