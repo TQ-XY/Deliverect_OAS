@@ -1,0 +1,342 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Upsell  API",
+        "description": " We team up with the best global third-party delivery apps, seamlessly consolidating all your channels into one simple system.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.staging.deliverect.com"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "Machine2MachineAccessTokenRequest": {
+                "title": "Get Access Token",
+                "required": [
+                    "client_id",
+                    "client_secret",
+                    "audience",
+                    "grant_type"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "client_secret": {
+                        "type": "string"
+                    },
+                    "audience": {
+                        "type": "string"
+                    },
+                    "grant_type": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "client_id": "{{clientId}}",
+                        "client_secret": "{{clientSecret}}",
+                        "audience": "https://api.deliverect.com",
+                        "grant_type": "client_credentials"
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": " "
+        },
+        {
+            "name": "Deliverect Endpoints",
+            "description": "(Deliverect Endpoints)"
+        }
+    ],
+    "paths": {
+        "/oauth/token": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Machine 2 Machine Access Token",
+                "requestBody": {
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "type": "string",
+                                "examples": [
+                                    {
+                                        "client_id": "{{clientId}}",
+                                        "client_secret": "{{clientSecret}}" ,
+                                        "audience": "https://api.deliverect.com",
+                                        "grant_type": "token"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "access_token": "ey**-**-Q",
+                                    "expires_at": 1620899002,
+                                    "token_type": "Bearer",
+                                    "scope": "genericPOS provisioning"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "access_denied",
+                                    "error_description": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "//upsell/channel/{channelLinkId}": {
+            "post": {
+                "summary": "Upsell API - Get Upsell Items",
+                "description": "",
+                "operationId": "upsell_endpoints-get-upsell-items",
+                "parameters": [
+                    {
+                        "name": "channelLinkId",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "account",
+                                    "channelLink",
+                                    "location",
+                                    "items"
+                                ],
+                                "properties": {
+                                    "account": {
+                                        "type": "string"
+                                    },
+                                    "channelLink": {
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "plu": {
+                                                    "type": "string"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "format": "int32"
+                                                }
+                                            },
+                                            "required": [
+                                                "plu"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Upsell ": {
+                                    "value": {
+                                        "account": "67f93fc709a75f7e9e36da7f",
+                                        "location": "67f9413754e4db73b3ed1e9f",
+                                        "channelLink": "67f94128c490d2ed895a34e7",
+                                        "items": [
+                                            {
+                                                "plu": "PLU1",
+                                                "quantity": 1
+                                            },
+                                            {
+                                                "plu": "PLU2",
+                                                "quantity": 2
+                                            },
+                                            {
+                                                "plu": "PLU3",
+                                                "quantity": 1
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "items": [ { "plu": "PLU-1", "quantity": 1 }, { "plu": "PLU-2", "quantity": 1 }, { "plu": "PLU-3", "quantity": 1 } ], "upsellMetricId": "686ecf6141884e91f9126fc9" }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "plu": {
+                                                        "type": "string",
+                                                        "example": "PLU-1"
+                                                    },
+                                                    "quantity": {
+                                                        "type": "integer",
+                                                        "example": 1,
+                                                        "default": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "upsellMetricId": {
+                                            "type": "string",
+                                            "example": "686ecf6141884e91f9126fc9"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "403",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": { "code": "insufficient_permissions", "description": "Not allowed to access this location." }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "example": "insufficient_permissions"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Not allowed to access this location."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "422",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": [ { "type": "missing", "loc": [ "location" ], "msg": "Field required", "input": { "account": "67f93fc709a75f7e9e36da7f", "channelLink": "67f94128c490d2ed895a34e7", "items": [ "<Item plu:PLU1 price: 0 quantity: 0 type: 1 subItems: []>", "<Item plu:PLU2 price: 0 quantity: 0 type: 1 subItems: []>", "<Item plu:PLU3 price: 0 quantity: 0 type: 1 subItems: []>" ] }, "url": "https: //errors.pydantic.dev/2.10/v/missing" } ]
+                                    }
+                                },
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "example": "missing"
+                                            },
+                                            "loc": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "example": "location"
+                                                }
+                                            },
+                                            "msg": {
+                                                "type": "string",
+                                                "example": "Field required"
+                                            },
+                                            "input": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "account": {
+                                                        "type": "string",
+                                                        "example": "67f93fc709a75f7e9e36da7f"
+                                                    },
+                                                    "channelLink": {
+                                                        "type": "string",
+                                                        "example": "67f94128c490d2ed895a34e7"
+                                                    },
+                                                    "items": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "<Item plu:PLU1 price:0 quantity:0 type:1 subItems:[]>"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "url": {
+                                                "type": "string",
+                                                "example": "https://errors.pydantic.dev/2.10/v/missing"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "x-readme": {
+            "explorer-enabled": true,
+            "proxy-enabled": true
+        }
+    }}
